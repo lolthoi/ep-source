@@ -1,0 +1,102 @@
+<div *ngIf=" isUserSelfEvaluated; else elseBlock" style="height: 100%">
+    <div *ngIf="isHavingEvaluate || isHavingEvaluate == null; else elseBlockNothingToEvaluate">
+        <dx-box
+        direction="row"
+        width="100%">
+            <dxi-item
+                class="rect margin-10"
+                [visible]="!readOnly"
+                [ratio]="1">
+                <div class="">Year</div>
+                <dx-select-box
+                    [items]="yearDatasource"
+                    placeholder="Choose Year"
+                    displayExpr="value"
+                    valueExpr="id"
+                    [showClearButton]="true"
+                    [(value)]="selectedYear"
+                    (onValueChanged)="onValueChangeYearSelected($event)"
+                    [visible]="!readOnly"
+                ></dx-select-box>
+            </dxi-item>
+            <dxi-item
+                class="rect margin-10"
+                [visible]="!readOnly"
+                [ratio]="1">
+                <div class="">Quarter</div>
+                <dx-select-box
+                    [items]="quarterDataSource"
+                    placeholder="Choose Quarter"
+                    displayExpr="value"
+                    valueExpr="id"
+                    [showClearButton]="true"
+                    [(value)]="selectedQuarter"
+                    (onValueChanged)="onValueChangeQuarterSelected($event)"
+                    [visible]="!readOnly"
+                ></dx-select-box>
+            </dxi-item>
+            <dxi-item
+                class="rect margin-10"
+                [visible]="!readOnly"
+                [ratio]="1">
+                <div class="">Project</div>
+                <dx-select-box
+                    [items]="projectDatasource"
+                    [showClearButton]="true"
+                    placeholder="Choose Project"
+                    displayExpr="value"
+                    valueExpr="id"
+                    [(value)]="selectedProject"
+                    (onValueChanged)="onValueProjectSelected($event)"
+                    [visible]="!readOnly"
+                ></dx-select-box>
+            </dxi-item>
+        </dx-box>
+        
+        <dx-form id="form" [formData]="currModel" [readOnly]="readOnly" [visible]="isDoneSelectQuarter || readOnly === true"> 
+            <dxi-item dataField="noteGoodThing" editorType="dxTextArea"  [editorOptions]="{ height: 80, maxLength: 1000}" [label]="{text: 'Good Points'}" >
+                <dxi-validation-rule type="required" message="Good Points is required">
+                </dxi-validation-rule>
+            </dxi-item>
+            <dxi-item dataField="noteBadThing" editorType="dxTextArea" [editorOptions]="{ height: 80, maxLength: 1000 }"  [label]="{text: 'Bad Points'}">
+                <dxi-validation-rule type="required" message="Bad Points is required">
+                </dxi-validation-rule>
+            </dxi-item>
+            <dxi-item dataField="noteOther" editorType="dxTextBox" [editorOptions]="{ height: 50, maxLength: 1000}"   [label]="{text: 'Others'}">
+            </dxi-item>
+        </dx-form>
+    </div>
+    <ng-template #elseBlockNothingToEvaluate>
+        <!-- Nothing to evaluate. -->
+        <div id="container">
+        <div id="error-box">
+            <!-- <div class="dot"></div>
+            <div class="dot two"></div> -->
+            <div class="face2">
+              <div class="eye"></div>
+              <div class="eye right"></div>
+              <div class="mouth sad"></div>
+            </div>
+            <div class="shadow move"></div>
+            <div class="message"><h1 class="alert">Attention!</h1><p>Nothing to evaluate.</div>
+        </div>
+    </div>
+    </ng-template>
+</div>
+<ng-template #elseBlock>
+    <div id="container">
+            <!-- Employees not evaluation yet. -->
+        <div id="error-box">
+            <!-- <div class="dot"></div>
+            <div class="dot two"></div> -->
+            <div class="face2">
+            <div class="eye"></div>
+            <div class="eye right"></div>
+            <div class="mouth sad"></div>
+            </div>
+            <div class="shadow move"></div>
+            <div class="message"><h1 class="alert">Attention!</h1><p>Employees not evaluated yet.</div>
+        </div>
+    </div>
+    
+</ng-template>

@@ -1,0 +1,91 @@
+<h2>User management</h2>
+<div>
+  <dx-data-grid
+    id="gridContainer"
+    [dataSource]="dataSource"
+    [columns]="gridColumns"
+    [showBorders]="true"
+    [allowColumnReordering]="true"
+    [rowAlternationEnabled]="true"
+    (onToolbarPreparing)="onToolbarPreparing($event)"
+  >
+    <dxo-paging [pageSize]="10"></dxo-paging>
+    <dxo-pager
+      [showPageSizeSelector]="true"
+      [allowedPageSizes]="[10, 25, 50, 100]"
+    ></dxo-pager>
+    <dxo-search-panel
+      [visible]="true"
+      [width]="240"
+      placeholder="Search..."
+    ></dxo-search-panel>
+
+    <dxi-column
+      [hidingPriority]="3"
+      dataField="firstName"
+      dataType="string"
+    ></dxi-column>
+    <dxi-column
+      [hidingPriority]="2"
+      dataField="lastName"
+      dataType="string"
+    ></dxi-column>
+    <dxi-column
+      [hidingPriority]="6"
+      dataField="email"
+      dataType="string"
+    ></dxi-column>
+    <dxi-column [hidingPriority]="1" dataField="sex" caption="Sex">
+      <dxo-lookup
+        [dataSource]="sexDataSource"
+        valueExpr="value"
+        displayExpr="caption"
+      ></dxo-lookup>
+    </dxi-column>
+    <dxi-column [hidingPriority]="5" dataField="roleId" caption="Role">
+      <dxo-lookup
+        [dataSource]="roleDataSource"
+        valueExpr="value"
+        displayExpr="caption"
+      ></dxo-lookup>
+    </dxi-column>
+    <dxi-column
+      [hidingPriority]="4"
+      dataField="status"
+      cellTemplate="activeTemplate"
+      caption="Active"
+      dataType="boolean"
+    ></dxi-column>
+
+    <dxi-column [hidingPriority]="6" cellTemplate="cellTemplate"> </dxi-column>
+    <div *dxTemplate="let data of 'cellTemplate'">
+      <dx-button
+        stylingMode="contained"
+        text="Detail"
+        type="default"
+        [width]="100"
+        (onClick)="onOpenDetailButton($event, data)"
+      >
+      </dx-button>
+    </div>
+    <div *dxTemplate="let data of 'activeTemplate'">
+      <span
+        title="Deactivated"
+        *ngIf="!data.data.status"
+        class="dx-icon-close"
+        style="color: red; font-size: large"
+      ></span>
+      <span
+        title="Active"
+        *ngIf="data.data.status"
+        class="dx-icon-check"
+        style="color: green; font-size: larger"
+      ></span>
+    </div>
+  </dx-data-grid>
+</div>
+<app-user-form
+  [model]="currUser"
+  (onRefreshGrid)="onRefreshGrid()"
+  [position]="positionDataSource"
+></app-user-form>

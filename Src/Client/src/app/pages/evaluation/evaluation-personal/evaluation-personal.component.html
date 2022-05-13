@@ -1,0 +1,225 @@
+<h2>Personal Evaluation</h2>
+
+<div id="header">
+  <dx-responsive-box singleColumnScreen="sm" [(screenByWidth)]="screen">
+    <dxi-row></dxi-row>
+    <dxi-row></dxi-row>
+    <dxi-row></dxi-row>
+
+    <dxi-col></dxi-col>
+    <dxi-col></dxi-col>
+
+    <dxi-item>
+      <dxi-location
+        [row]="0"
+        [col]="0"
+        [colspan]="1"
+        screen="lg"
+      ></dxi-location>
+      <dxi-location
+        [row]="0"
+        [col]="0"
+        [colspan]="1"
+        screen="sm"
+      ></dxi-location>
+      <div *dxTemplate class="item">
+        <div style="width: 100%; display: inline-flex">
+          <div style="width: 20%"></div>
+          <div style="width: 80%">
+            <div style="width: 300px; max-width: 300px">
+              <dx-button
+                stylingMode="contained"
+                text="Self Evaluation"
+                type="success"
+                (onClick)="onClickSelfEvaluateButton($event)"
+              >
+              </dx-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </dxi-item>
+
+    <dxi-item>
+      <dxi-location
+        [row]="1"
+        [col]="0"
+        [colspan]="1"
+        screen="lg"
+      ></dxi-location>
+      <dxi-location
+        [row]="1"
+        [col]="0"
+        [colspan]="1"
+        screen="sm"
+      ></dxi-location>
+      <div *dxTemplate class="item">
+        <div style="width: 100%; display: inline-flex">
+          <div style="width: 20%" class="dx-field-label">From</div>
+          <div style="width: 80%" class="dx-field-value">
+            <dx-select-box
+              placeholder="From"
+              [dataSource]="years"
+              [showClearButton]="true"
+              [(value)]="formYearSelected"
+              (onValueChanged)="onFormYearChanged($event)"
+            >
+              <dx-validator
+                [validationRules]="customFromYearRule"
+                (onInitialized)="onInitializedCustomFromYear($event)"
+              >
+              </dx-validator>
+            </dx-select-box>
+          </div>
+        </div>
+      </div>
+    </dxi-item>
+
+    <dxi-item>
+      <dxi-location
+        [row]="1"
+        [col]="1"
+        [colspan]="1"
+        screen="lg"
+      ></dxi-location>
+      <dxi-location
+        [row]="2"
+        [col]="0"
+        [colspan]="1"
+        screen="sm"
+      ></dxi-location>
+      <div *dxTemplate class="item">
+        <div style="width: 100%; display: inline-flex">
+          <div style="width: 20%" class="dx-field-label">
+            <p>To</p>
+          </div>
+          <div style="width: 80%" class="dx-field-value">
+            <dx-select-box
+              placeholder="To"
+              [dataSource]="years"
+              [showClearButton]="true"
+              [(value)]="toYearSelected"
+              (onValueChanged)="onToYearChanged($event)"
+            >
+              <dx-validator
+                [validationRules]="customToYearRule"
+                (onInitialized)="onInitializedCustomToYear($event)"
+              >
+              </dx-validator>
+            </dx-select-box>
+          </div>
+        </div>
+      </div>
+    </dxi-item>
+
+    <dxi-item>
+      <dxi-location
+        [row]="2"
+        [col]="0"
+        [colspan]="1"
+        screen="lg"
+      ></dxi-location>
+      <dxi-location
+        [row]="3"
+        [col]="0"
+        [colspan]="1"
+        screen="sm"
+      ></dxi-location>
+      <div *dxTemplate class="item">
+        <div style="width: 100%; display: inline-flex">
+          <div style="width: 20%" class="dx-field-label">Name</div>
+          <div style="width: 80%" class="dx-field-value">
+            <b>{{ userCurrent }}</b>
+          </div>
+        </div>
+      </div>
+    </dxi-item>
+
+    <dxi-item>
+      <dxi-location
+        [row]="2"
+        [col]="1"
+        [colspan]="1"
+        screen="lg"
+      ></dxi-location>
+      <dxi-location
+        [row]="4"
+        [col]="0"
+        [colspan]="1"
+        screen="sm"
+      ></dxi-location>
+      <div *dxTemplate class="item">
+        <div style="width: 100%; display: inline-flex">
+          <div style="width: 20%" class="dx-field-label">Project</div>
+          <div style="width: 80%" class="dx-field-value">
+            <dx-select-box
+              placeholder="Project"
+              [dataSource]="listProjects"
+              [showClearButton]="true"
+              displayExpr="name"
+              valueExpr="id"
+              (onValueChanged)="onProjectChanged($event)"
+            ></dx-select-box>
+          </div>
+        </div>
+      </div>
+    </dxi-item>
+  </dx-responsive-box>
+</div>
+
+<div id="evaluationPersonal" style="margin: 20px">
+  <dx-data-grid
+    id="girdContainer"
+    [dataSource]="dataSource"
+    [columns]="gridColumns"
+    [showBorders]="true"
+    [(disabled)]="loading"
+    (onRowClick)="eventClick($event)"
+  >
+    <dxi-column
+      dataField="quarterText"
+      dataType="string"
+      caption="Quarter"
+    ></dxi-column>
+    <dxi-column
+      dataField="position"
+      dataType="string"
+      caption="Position"
+    ></dxi-column>
+    <dxi-column
+      dataField="pointAverage"
+      dataType="number"
+      caption="Total points of evaluation"
+    ></dxi-column>
+
+    <dxi-column
+      dataField="leader"
+      dataType="string"
+      caption="Leader"
+    ></dxi-column>
+    <dxi-column
+      dataField="project"
+      dataType="string"
+      caption="Project"
+    ></dxi-column>
+  </dx-data-grid>
+</div>
+
+<dx-load-panel
+  #loadPanel
+  shadingColor="rgba(0,0,0,0.4)"
+  [position]="{ of: '#evaluationPersonal' }"
+  [(visible)]="loading"
+  [showIndicator]="true"
+  [showPane]="true"
+  [shading]="true"
+  [closeOnOutsideClick]="false"
+>
+</dx-load-panel>
+
+<popup-evalate-personal></popup-evalate-personal>
+
+<app-evaluation-detail
+  [quarterId]="quarterEvaluationId"
+  [rootComp]="root"
+></app-evaluation-detail>

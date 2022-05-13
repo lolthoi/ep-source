@@ -1,0 +1,65 @@
+<h2>Project management</h2>
+
+<div id="project">
+  <dx-data-grid
+    id="gridContainer"
+    [dataSource]="dataSource"
+    [columns]="gridColumns"
+    [showBorders]="true"
+    (onToolbarPreparing)="onToolbarPreparing($event)"
+    [(disabled)]="loading"
+  >
+    <dxo-paging [pageSize]="10"></dxo-paging>
+    <dxo-pager
+      [showPageSizeSelector]="true"
+      [allowedPageSizes]="[10, 25, 50, 100]"
+      [showInfo]="true"
+    ></dxo-pager>
+    <dxo-search-panel
+      [visible]="true"
+      [width]="240"
+      placeholder="Search..."
+    ></dxo-search-panel>
+
+    <dxi-column dataField="name" dataType="string"></dxi-column>
+    <dxi-column dataField="description" dataType="string"></dxi-column>
+    <dxi-column
+      dataField="statusText"
+      dataType="string"
+      caption="Status Project"
+    ></dxi-column>
+
+    <dxi-column cellTemplate="cellTemplate"> </dxi-column>
+
+    <div *dxTemplate="let data of 'cellTemplate'">
+      <dx-button
+        stylingMode="contained"
+        text="Detail"
+        type="default"
+        [width]="120"
+        (onClick)="onOpenDetailButton($event, data)"
+      >
+      </dx-button>
+    </div>
+  </dx-data-grid>
+
+  <app-project-form
+    [model]="currentProject"
+    [selectedIndex]="selectedIndex"
+    (onSubmitForm)="saveProjectForm($event)"
+    (onConfirmDelete)="deleteProject($event)"
+  >
+  </app-project-form>
+</div>
+
+<dx-load-panel
+  #loadPanel
+  shadingColor="rgba(0,0,0,0.4)"
+  [position]="{ of: '#project' }"
+  [(visible)]="loading"
+  [showIndicator]="true"
+  [showPane]="true"
+  [shading]="true"
+  [closeOnOutsideClick]="false"
+>
+</dx-load-panel>

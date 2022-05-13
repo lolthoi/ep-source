@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kloon.EmployeePerformance.WebAPI", "Kloon.EmployeePerformance.WebAPI\Kloon.EmployeePerformance.WebAPI.csproj", "{A50157CA-B1EF-4CBD-9F87-16BC637BD708}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kloon.EmployeePerformance.DataAccess", "Kloon.EmployeePerformance.DataAccess\Kloon.EmployeePerformance.DataAccess.csproj", "{A6BA7051-2A6F-4BA0-B06B-7F88D16A1763}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kloon.EmployeePerformance.Logic", "Kloon.EmployeePerformance.Logic\Kloon.EmployeePerformance.Logic.csproj", "{F09A3BF5-D277-45CD-8F0E-F180C6843BD3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kloon.EmployeePerformance.Models", "Kloon.EmployeePerformance.Models\Kloon.EmployeePerformance.Models.csproj", "{76D614FC-B4D7-42A1-BAC7-BC19E2E0AE52}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kloon_EmployeePerformance_UnitTest", "Kloon_EmployeePerformance_API_UnitTest\Kloon_EmployeePerformance_UnitTest.csproj", "{353ABE90-0B27-4CA0-B9E6-0C4BABB42B75}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A50157CA-B1EF-4CBD-9F87-16BC637BD708}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A50157CA-B1EF-4CBD-9F87-16BC637BD708}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A50157CA-B1EF-4CBD-9F87-16BC637BD708}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A50157CA-B1EF-4CBD-9F87-16BC637BD708}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6BA7051-2A6F-4BA0-B06B-7F88D16A1763}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6BA7051-2A6F-4BA0-B06B-7F88D16A1763}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6BA7051-2A6F-4BA0-B06B-7F88D16A1763}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6BA7051-2A6F-4BA0-B06B-7F88D16A1763}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F09A3BF5-D277-45CD-8F0E-F180C6843BD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F09A3BF5-D277-45CD-8F0E-F180C6843BD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F09A3BF5-D277-45CD-8F0E-F180C6843BD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F09A3BF5-D277-45CD-8F0E-F180C6843BD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76D614FC-B4D7-42A1-BAC7-BC19E2E0AE52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76D614FC-B4D7-42A1-BAC7-BC19E2E0AE52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76D614FC-B4D7-42A1-BAC7-BC19E2E0AE52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76D614FC-B4D7-42A1-BAC7-BC19E2E0AE52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{353ABE90-0B27-4CA0-B9E6-0C4BABB42B75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{353ABE90-0B27-4CA0-B9E6-0C4BABB42B75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{353ABE90-0B27-4CA0-B9E6-0C4BABB42B75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{353ABE90-0B27-4CA0-B9E6-0C4BABB42B75}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4120ECBE-49AD-4A16-96B3-6ADF9DD44154}
+	EndGlobalSection
+EndGlobal

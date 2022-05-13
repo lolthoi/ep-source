@@ -1,0 +1,12 @@
+::ng-deep .demo-container, #header{
+    height: 100%;
+    margin-bottom: 15px;
+}
+
+::ng-deep #header .item {
+    margin: 15px;
+}
+
+::ng-deep #header p {
+    padding-top: 10px;
+}

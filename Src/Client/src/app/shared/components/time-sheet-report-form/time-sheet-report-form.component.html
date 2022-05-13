@@ -1,0 +1,148 @@
+<dx-popup
+  [maxWidth]="1000"
+  height="auto"
+  [showTitle]="true"
+  [(title)]="popupTitle"
+  position="center"
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="false"
+  [showCloseButton]="false"
+  [(visible)]="popupVisible"
+>
+  <!-- (onShown)="setFocus($event)" -->
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [visible]="model.state === formState.CREATE"
+    [options]="createButtonOptions"
+  >
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [visible]="model.state === formState.EDIT"
+    [options]="editButtonOptions"
+  >
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="after"
+    [options]="closeButtonOptions"
+  >
+  </dxi-toolbar-item>
+  <dx-form
+    id="form"
+    [(formData)]="currTimeSheetReportDetailModel"
+    [colCount]="6"
+    width="auto"
+  >
+    <dxi-item [colSpan]="3" [label]="{ text: 'Backlog Id' }">
+      <div *dxTemplate>
+        <dx-text-box [(value)]="currTimeSheetReportDetailModel.backlogId">
+        </dx-text-box>
+      </div>
+    </dxi-item>
+
+    <dxi-item [colSpan]="3" [label]="{ text: 'Task Id' }">
+      <div *dxTemplate>
+        <dx-text-box [(value)]="currTimeSheetReportDetailModel.taskId">
+        </dx-text-box>
+      </div>
+    </dxi-item>
+
+    <dxi-item [colSpan]="6" [label]="{ text: 'Name Task' }">
+      <div *dxTemplate>
+        <dx-text-box
+          [(value)]="currTimeSheetReportDetailModel.timeSheetRecordName"
+        >
+        </dx-text-box>
+      </div>
+      <dxi-validation-rule type="required" message="Name is required">
+      </dxi-validation-rule>
+    </dxi-item>
+
+    <dxi-item [colSpan]="6" [label]="{ text: 'User' }">
+      <div *dxTemplate>
+        <dx-select-box
+          [dataSource]="listUser"
+          valueExpr="id"
+          displayExpr="fullName"
+          [showClearButton]="true"
+          [searchEnabled]="true"
+          (onValueChanged)="onValueChangeUser($event)"
+          [(value)]="currTimeSheetReportDetailModel.userId"
+        >
+        </dx-select-box>
+      </div>
+      <dxi-validation-rule type="required" message="User is required">
+      </dxi-validation-rule>
+    </dxi-item>
+
+    <dxi-item [colSpan]="6" [label]="{ text: 'Activity' }">
+      <div *dxTemplate>
+        <dx-select-box
+          [dataSource]="userActivity"
+          valueExpr="id"
+          displayExpr="activityName"
+          [showClearButton]="true"
+          [searchEnabled]="true"
+          (onValueChanged)="onValueChangeActivity($event)"
+          [(value)]="currTimeSheetReportDetailModel.tsActivityId"
+          [disabled]="choosenUser"
+        >
+        </dx-select-box>
+      </div>
+      <dxi-validation-rule type="required" message="User is required">
+      </dxi-validation-rule>
+    </dxi-item>
+
+    <dxi-item [colSpan]="2" [label]="{ text: 'From' }">
+      <div *dxTemplate>
+        <dx-date-box
+          [(value)]="currTimeSheetReportDetailModel.startDate"
+          type="time"
+          displayFormat="HH:mm"
+          placeholder="HH:mm"
+          (onValueChanged)="onValueChangedStartTime($event)"
+          (onInitialized)="onInitStartTimeComp($event)"
+        >
+        </dx-date-box>
+      </div>
+      <dxi-validation-rule type="required" message="Start time is required">
+      </dxi-validation-rule>
+    </dxi-item>
+
+    <dxi-item [label]="{ text: 'To' }" [colSpan]="2">
+      <div *dxTemplate>
+        <dx-date-box
+          [(value)]="currTimeSheetReportDetailModel.endDate"
+          type="time"
+          displayFormat="HH:mm"
+          placeholder="HH:mm"
+          (onValueChanged)="onValueChangedEndTime($event)"
+          (onInitialized)="onInitEndTimeComp($event)"
+        >
+        </dx-date-box>
+      </div>
+      <dxi-validation-rule type="required" message="End time is required">
+      </dxi-validation-rule>
+    </dxi-item>
+
+    <dxi-item [label]="{ text: 'Date' }" [colSpan]="2">
+      <div *dxTemplate>
+        <dx-date-box
+          [(value)]="currTimeSheetReportDetailModel.startDate"
+          type="date"
+          displayFormat="dd'/'MM'/'yyyy"
+          (onValueChanged)="onValueChangedDateRecord($event)"
+        >
+        </dx-date-box>
+      </div>
+      <dxi-validation-rule type="required" message="Date is required">
+      </dxi-validation-rule>
+    </dxi-item>
+  </dx-form>
+</dx-popup>

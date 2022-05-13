@@ -1,0 +1,94 @@
+.logos-container {
+  margin: 20px 0 40px 0;
+  text-align: center;
+  svg {
+    display: inline-block;
+  }
+}
+.title{
+  text-align: center;
+  font-weight: bold;
+  font-size: 36px;
+  margin-bottom: 0px;
+}
+.devextreme-logo {
+  width: 200px;
+  height: 34px;
+  margin-bottom: 13px;
+}
+
+.angular-logo {
+  width: 220px;
+  height: 62px;
+}
+
+.plus {
+  margin: 15px 10px;
+  width: 22px;
+  height: 22px;
+}
+
+:host-context(.screen-x-small) .logos-container {
+  svg {
+    width: 100%;
+    display: block;
+    &.plus {
+      margin: 0;
+    }
+  }
+}
+
+.dx-gallery-item-image {  
+  max-width: 100%;  
+  height: auto;  
+  margin: auto;  
+  flex-shrink: 0;  
+}  
+
+
+
+
+::ng-deep .demo-container, #page{
+  height: 100%;
+  min-height: 300px;
+}
+
+
+::ng-deep .item {
+  height: 100%;
+}
+::ng-deep #page p {
+  font-size: 20px;
+  padding-top: 10px;
+  text-align: center;
+}
+ .form-avarta {
+  text-align: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  img{
+  height: 200px;
+  width: 200px;
+  border-radius: 70%;
+  }
+}
+.about-img{
+ img{
+  height: 128px;
+  width: 128px;
+  padding-left: 100px;
+ }
+}
+#about{
+  background-color: #A3A3A4;
+}
+ #ceo{
+   padding-bottom: 100px;
+   padding-top: 100px;
+ }
+ #title-about{
+   text-align: center;
+   font-size: 36px;
+   font-weight: bold;
+ }

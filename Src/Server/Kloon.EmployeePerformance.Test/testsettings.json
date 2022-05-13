@@ -1,0 +1,8 @@
+﻿{
+  "TestSettings": {
+    "ClientName": "Employee",
+    "ApiUrl": "http://localhost:31102/",
+    "SecurityKey": ""
+  }
+}
+

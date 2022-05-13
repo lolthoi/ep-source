@@ -1,0 +1,50 @@
+Feature: Authenticate meta
+
+@StepDef
+@Context
+Scenario: I am on the login employee pages
+     Given I start a new browser
+     When I navigate to "http://rethink.kloon.vn:7200/login-form"
+@StepDef
+@Action
+Scenario Outline:I have Valid login
+     Given  username can be located by css selector ".dx-col-0.dx-field-item.dx-field-item-required.dx-first-col.dx-first-row.dx-flex-layout.dx-last-col > .dx-field-item-content.dx-field-item-content-location-bottom > .dx-editor-filled.dx-show-invalid-badge.dx-textbox.dx-texteditor.dx-texteditor-empty.dx-validator.dx-visibility-change-handler.dx-widget > .dx-texteditor-container > .dx-texteditor-input-container > input[role='textbox']"
+	 And password can be located by css selector "[type='password']"
+	 And loginBtn can be located by css selector ".dx-button-text.dx-template-wrapper"
+	 And profileBtn can be located by css selector ".user-info"
+	 And logBtn can be located by css selector "li:nth-of-type(2) > div[role='menuitem']  .dx-menu-item-text"
+	 And eye can be located by css selector ".dx-icon.dx-icon-hidepassword"
+	 And eye2 can be located by css selector ".dx-icon.dx-icon-showpassword"
+	 When I type "<username>" in username
+	 And I type "<password>" in password 
+	 And I click eye
+	 And I wait 3 seconds
+	 And I click eye2
+	 And I wait 3 seconds
+	 And  I click loginBtn
+	 And I click profileBtn
+	 And I click logBtn
+
+	 Examples: case
+	    |username|password|
+		|admin|123456|
+		|pham.hue|123456|
+		|admin@kloon.vn|123456|
+@StepDef
+@Assertion
+Scenario Outline:I have Invalid login
+     Given user1 can be located by css selector ".dx-col-0.dx-field-item.dx-field-item-required.dx-first-col.dx-first-row.dx-flex-layout.dx-last-col > .dx-field-item-content.dx-field-item-content-location-bottom > .dx-editor-filled.dx-show-invalid-badge.dx-textbox.dx-texteditor.dx-validator.dx-visibility-change-handler.dx-widget > .dx-texteditor-container > .dx-texteditor-input-container > input[role='textbox']"
+	 And pass1 can be located by css selector "[type='password']"
+	 When I type "<user1>" in username 
+	 And I type "<pass1>" in password
+	 And I click loginBtn
+	 And I click user1 
+	 And I clear user1 
+	 And I click pass1 
+	 And I clear pass1
+	 Examples: case
+	    |user1|pass1|
+		|admin@keeloon.com|123456|
+		|user@kloon.com|12345ee6|
+		|test|12345|
+        

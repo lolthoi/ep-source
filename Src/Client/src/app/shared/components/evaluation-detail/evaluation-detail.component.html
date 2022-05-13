@@ -1,0 +1,52 @@
+<dx-popup
+  width="90%"
+  height="80%"
+  [maxHeight]="800"
+  [maxWidth]="800"
+  [showTitle]="true"
+  [(title)]="title"
+  showCloseButton="true"
+  [dragEnabled]="false"
+  [showCloseButton]="false"
+  (onInitialized)="onInitPopup($event)"
+  (onHidden)="onHiddenPopup($event)"
+  container=".dx-viewport"
+>
+  <dx-scroll-view id="scrollview" showScrollbar="always">
+    <app-evaluation-user-detail
+      [quarterEvaluationId]="quarterId"
+      [readOnly]="true"
+      [isUserSelfEvaluated]="false"
+    >
+    </app-evaluation-user-detail>
+    <app-evaluation-leader-detail
+      [id]="id"
+      [quarterEvaluationId]="quarterId"
+      [component]="component"
+    ></app-evaluation-leader-detail>
+  </dx-scroll-view>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [visible]="isEdited"
+    [disabled]="isdisabledSaveBtn"
+    [options]="saveButtonOptions"
+  >
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [visible]="!isEdited && visibleEdit"
+    [options]="editButtonOptions"
+  >
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="after"
+    [options]="closeButtonOptions"
+  >
+  </dxi-toolbar-item>
+</dx-popup>

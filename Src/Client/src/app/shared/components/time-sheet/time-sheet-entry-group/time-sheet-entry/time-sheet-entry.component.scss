@@ -1,0 +1,50 @@
+.entry-container {
+  border-bottom: 1px solid #c6d2d9;
+  border-top: 1px solid #c6d2d9;
+  transition: all 0.2s ease-in-out;
+}
+
+.entry {
+  // display: flex;
+  // align-items: stretch;
+  width: 100%;
+  position: relative;
+  padding: 0.7143rem 0;
+}
+
+//Padding input
+:host ::ng-deep .dx-layout-manager .dx-field-item:not(.dx-first-col) {
+  padding-left: 8px;
+}
+
+:host ::ng-deep .dx-layout-manager .dx-field-item:not(.dx-last-col) {
+  padding-right: 8px;
+}
+
+//Clear border textinput
+::ng-deep .dx-texteditor.dx-editor-outlined {
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 42%);
+}
+
+//Add three dot at over content of Name field
+::ng-deep .dx-texteditor-input {
+  text-overflow: ellipsis;
+}
+
+.entries-total {
+  color: #333;
+  line-height: 1 !important;
+  font-weight: 1000;
+  padding-left: 10px;
+  font-size: 15px;
+}
+
+.entry-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+:host ::ng-deep .dx-button-has-text .dx-button-content {
+  padding: 0;
+}

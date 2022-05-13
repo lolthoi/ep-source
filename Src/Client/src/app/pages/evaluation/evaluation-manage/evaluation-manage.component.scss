@@ -1,0 +1,48 @@
+@media all and (min-width: 375px) {
+  .dx-fieldset {
+    .dx-field {
+      .dx-field-label {
+        width: 20%;
+      }
+      .dx-field-value {
+        width: 40%;
+      }
+    }
+  }
+}
+@media all and (min-width: 576px) {
+  .dx-fieldset {
+    .dx-field {
+      .dx-field-label {
+        width: 20%;
+      }
+      .dx-field-value {
+        width: 40%;
+      }
+    }
+  }
+}
+@media all and (min-width: 768px) {
+  .dx-fieldset {
+    .dx-field {
+      .dx-field-label {
+        width: 10%;
+      }
+      .dx-field-value {
+        width: 30%;
+      }
+    }
+  }
+}
+@media all and (min-width: 992px) {
+  .dx-fieldset {
+    .dx-field {
+      .dx-field-label {
+        width: 10%;
+      }
+      .dx-field-value {
+        width: 20%;
+      }
+    }
+  }
+}

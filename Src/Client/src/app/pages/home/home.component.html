@@ -1,0 +1,141 @@
+<dx-gallery #gallery
+        id="gallery"
+        [dataSource]="images"
+        [slideshowDelay]="slideshowDelay"
+        [loop]="true"
+        [showNavButtons]="true"
+        [showIndicator]="true"
+            height=auto
+        width=auto
+    ></dx-gallery>
+  <p class="title">Executive Board</p>
+
+  <div id="page">
+    <dx-responsive-box
+        singleColumnScreen="sm"
+        [(screenByWidth)]="screen"
+        id="ceo">
+        <dxi-row [ratio]="1"></dxi-row>
+        <dxi-row [ratio]="2" screen="xs"></dxi-row>
+        <dxi-row [ratio]="2"></dxi-row>
+        <dxi-row [ratio]="1"></dxi-row>
+        <dxi-col [ratio]="1"></dxi-col>
+        <dxi-col [ratio]="2" screen="lg"></dxi-col>
+        <dxi-col [ratio]="1"></dxi-col>
+        <dxi-item>
+            <dxi-location
+                [row]="1"
+                [col]="1"
+                screen="lg"
+            ></dxi-location>
+            <dxi-location
+                [row]="1"
+                [col]="0"
+                [colspan]="2"
+                screen="sm"
+            ></dxi-location>
+            <div *dxTemplate class="content item">
+                <p>CEO</p>
+                <dxi-item>
+                    <div class="form-avarta">
+                        <dxi-item>
+                            <div class="form-avarta">
+                                <img src="../../../assets/logo/kloon-logo.jpg" alt="">
+                            </div>
+                        </dxi-item>
+                    </div>
+                </dxi-item>
+                <p>Name</p>
+            
+            </div>
+        </dxi-item>
+        <dxi-item>
+            <dxi-location
+                [row]="1"
+                [col]="0"
+                screen="lg"
+            ></dxi-location>
+            <dxi-location
+                [row]="2"
+                [col]="0"
+                screen="sm"
+            ></dxi-location>
+            <div *dxTemplate class="content item">
+                <p >CEO</p>
+                <dxi-item>
+                    <div class="form-avarta">
+                        <dxi-item>
+                            <div class="form-avarta">
+                                <img src="../../../assets/logo/kloon-logo.jpg" alt="">
+                            </div>
+                        </dxi-item>
+                    </div>
+                </dxi-item>
+                <p >Name</p>
+            
+            </div>
+        </dxi-item>
+        <dxi-item>
+            <dxi-location
+                [row]="1"
+                [col]="2"
+                screen="lg"
+            ></dxi-location>
+            <dxi-location
+                [row]="2"
+                [col]="1"
+                screen="sm"
+            ></dxi-location>
+            <div *dxTemplate class="content item">
+                <p>CEO</p>
+                <dxi-item>
+                    <div class="form-avarta">
+                        <img src="../../../assets/logo/kloon-logo.jpg" alt="">
+                    </div>
+                </dxi-item>
+                <p>Name</p>
+            
+            </div>
+        </dxi-item>
+
+    </dx-responsive-box>
+    <dx-responsive-box
+        singleColumnScreen="sm"
+        [(screenByWidth)]="screen"
+        id="about"
+        >
+        <dxi-row [ratio]="1"></dxi-row>
+        <dxi-row [ratio]="2" screen="xs"></dxi-row>
+        <dxi-row [ratio]="2"></dxi-row>
+        <dxi-row [ratio]="1"></dxi-row>
+        <dxi-col [ratio]="1"></dxi-col>
+        <dxi-col [ratio]="2" screen="lg"></dxi-col>
+        <dxi-col [ratio]="1"></dxi-col>
+        <dxi-item>
+            <dxi-location
+                [row]="1"
+                [col]="1"
+                screen="lg"
+            ></dxi-location>
+            <dxi-location
+                [row]="1"
+                [col]="0"
+                [colspan]="2"
+                screen="sm"
+            ></dxi-location>
+            <div>
+                <p id="title-about">About</p>
+                <p>The spelling mistakes in the text had been highlighted in green.
+                    The text is finished, but the pictures will have to be pasted in later.
+                    You need to demonstrate to the examiners that you have more than a literal understanding of the text.
+                    The students are reading "Lord of the Flies" as one of their set texts this year.
+                    At this point in the speech, the minister departed from his prepared text.</p>
+
+            </div>
+          
+        </dxi-item>
+    </dx-responsive-box>
+</div>
+
+
+

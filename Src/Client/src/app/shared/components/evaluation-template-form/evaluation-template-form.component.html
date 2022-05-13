@@ -1,0 +1,233 @@
+<dx-popup
+  [maxWidth]="1000"
+  [maxHeight]="1000"
+  [showTitle]="true"
+  [(title)]="popupTitle"
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="false"
+  [(visible)]="popupVisible"
+  [showCloseButton]="false"
+  (onShowing)="onShowing($event)"
+>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [visible]="model.state === formState.CREATE"
+    [options]="AddButtonOptions"
+  >
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [visible]="model.state === formState.EDIT"
+    [options]="editButtonOptions"
+  >
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [visible]="model.state === formState.DETAIL"
+    [options]="enterEditFormButtonOptions"
+  >
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [visible]="model.state === formState.DETAIL"
+    [options]="deleteButtonOptions"
+  >
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="after"
+    [options]="closeButtonOptions"
+  >
+  </dxi-toolbar-item>
+
+  <div *dxTemplate="let data of 'content'">
+    <dx-scroll-view width="auto" height="100%">
+      <dx-form
+        id="form"
+        [formData]="currentTemplate"
+        [colCount]="2"
+        [readOnly]="model.state === formState.DETAIL"
+      >
+        <dxi-item
+          dataField="name"
+          editorType="dxTextBox"
+          [editorOptions]="{ width: auto, height: auto }"
+        >
+          <dxi-validation-rule
+            type="required"
+            message="Name is required"
+            [visible]="true"
+          >
+          </dxi-validation-rule>
+        </dxi-item>
+
+        <dxi-item
+          dataField="positionId"
+          [label]="{ text: 'Position' }"
+          editorType="dxSelectBox"
+          [editorOptions]="{
+            dataSource: positions,
+            displayExpr: 'name',
+            valueExpr: 'id'
+          }"
+        >
+          <dxi-validation-rule
+            type="required"
+            message="Position is required"
+            [visible]="true"
+          >
+          </dxi-validation-rule>
+        </dxi-item>
+      </dx-form>
+      <dx-tree-list
+        id="criteria"
+        [dataSource]="criteriaTemplate"
+        keyExpr="id"
+        parentIdExpr="typeId"
+        rootValue="-1"
+        [showRowLines]="true"
+        [showBorders]="true"
+        [columnAutoWidth]="true"
+        (onInitialized)="onInitTreeListDetail($event)"
+        (onRowPrepared)="onRowPrepared($event)"
+        (onToolbarPreparing)="onToolbarPreparing($event)"
+        [visible]="
+          model.state === formState.DETAIL ||
+          model.state == formState.EDIT ||
+          model.state == formState.CREATE
+        "
+      >
+        <dxo-scrolling mode="standard"> </dxo-scrolling>
+        <dxo-row-dragging
+          [(allowReordering)]="isEnableDrag"
+          [onReorder]="onReorder"
+          [onDragChange]="onDragChange"
+          [showDragIcons]="showDragIcons"
+        ></dxo-row-dragging>
+        <div *dxTemplate="let cell of 'myToolbarTemplate'">
+          <dx-check-box
+            width="200"
+            text=" Re-arrange"
+            [(value)]="isEnableDrag"
+            (onInitialized)="onInitializedToolBarTreeListComponent($event)"
+            (onValueChanged)="onCheckBoxDragChange($event)"
+          >
+          </dx-check-box>
+          <dx-button
+            stylingMode="contained"
+            type="success"
+            text="Select Criteria"
+            (onInitialized)="onInitializedToolBarTreeListEditComponent($event)"
+            (onClick)="onClickSelectCriteria($event)"
+          >
+          </dx-button>
+        </div>
+        <dxi-column dataField="name" caption="Name"></dxi-column>
+        <dxi-column
+          dataField="orderNo"
+          [visible]="false"
+          [allowSorting]="true"
+        ></dxi-column>
+      </dx-tree-list>
+    </dx-scroll-view>
+  </div>
+</dx-popup>
+
+<dx-popup
+  width="auto"
+  height="auto"
+  [showTitle]="true"
+  title="DELETE CONFIRM"
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="false"
+  [showCloseButton]="false"
+  [(visible)]="popupConfirmDeleteVisible"
+>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [options]="confirmDeleteButtonOptions"
+  >
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="after"
+    [options]="closeDeletePopupButtonOptions"
+  >
+  </dxi-toolbar-item>
+  <div *dxTemplate="let data of 'content'">
+    Are you sure you want to delete this record?
+  </div>
+</dx-popup>
+
+<!-- Criteria Selection Popup -->
+<dx-popup
+  [maxWidth]="800"
+  [maxHeight]="800"
+  [showTitle]="true"
+  title="Select Criteria"
+  [closeOnOutsideClick]="false"
+  [showCloseButton]="false"
+  [(visible)]="popupCriteriaSelection"
+>
+  <div *dxTemplate="let data of 'content'">
+    <dx-scroll-view width="auto" height="100%">
+      <dx-tree-list
+        id="listCriteria"
+        [(dataSource)]="criterias"
+        rootValue="-1"
+        keyExpr="id"
+        [showRowLines]="true"
+        [showBorders]="true"
+        parentIdExpr="typeId"
+        [autoExpandAll]="false"
+        [columnAutoWidth]="true"
+        [wordWrapEnabled]="true"
+        (onInitialized)="onInitTreeList($event)"
+        (onRowPrepared)="onRowPrepared($event)"
+        (onSelectionChanged)="onSelectionChanged($event)"
+        [(selectedRowKeys)]="selectedRowKeys"
+      >
+        <dxo-scrolling mode="standard"> </dxo-scrolling>
+        <dxo-selection
+          mode="multiple"
+          [recursive]="true"
+          [allowSelectAll]="true"
+        ></dxo-selection>
+        <dxi-column
+          dataField="name"
+          [minWidth]="300"
+          [hidingPriority]="1"
+          caption="Select All"
+        ></dxi-column>
+      </dx-tree-list>
+    </dx-scroll-view>
+  </div>
+
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [options]="saveSelectionCriteria"
+  >
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="after"
+    [options]="closeSelectionCriteria"
+  >
+  </dxi-toolbar-item>
+</dx-popup>
+<!-- End Criteria Selection Popup -->

@@ -1,0 +1,50 @@
+<div id="eld">
+  <dx-tree-list
+    id="employees"
+    [(dataSource)]="dataSource"
+    rootValue="-1"
+    keyExpr="id"
+    [showRowLines]="true"
+    [showBorders]="true"
+    parentIdExpr="typeId"
+    [columnAutoWidth]="true"
+    [wordWrapEnabled]="true"
+    (onInitialized)="onInitTreeList($event)"
+    (onRowPrepared)="onRowPrepared($event)"
+    [autoExpandAll]="true"
+  >
+    <dxo-scrolling mode="standard"></dxo-scrolling>
+    <dxi-column dataField="name" [minWidth]="200"></dxi-column>
+    <dxi-column
+      style="float: right"
+      [minWidth]="150"
+      cellTemplate="cellTemplate"
+    ></dxi-column>
+
+    <div *dxTemplate="let cell of 'cellTemplate'">
+      <div style="float: right; width: 30%">
+        <dx-number-box
+          *ngIf="cell.data.typeId !== null"
+          stylingMode="contained"
+          style="margin-left: 10px"
+          hint="Point"
+          [(readOnly)]="isDisableTextbox"
+          [min]="1"
+          format="###0"
+          [max]="7"
+          [(value)]="cell.data.point"
+          (onInitialized)="onInitTextbox($event)"
+          (onValueChanged)="onChangePoint($event, cell.data)"
+        >
+          <dx-validator>
+            <dxi-validation-rule
+              type="required"
+              message=""
+            ></dxi-validation-rule>
+          </dx-validator>
+        </dx-number-box>
+        <div *ngIf="cell.data.typeId === null">{{ cell.data.point }}</div>
+      </div>
+    </div>
+  </dx-tree-list>
+</div>

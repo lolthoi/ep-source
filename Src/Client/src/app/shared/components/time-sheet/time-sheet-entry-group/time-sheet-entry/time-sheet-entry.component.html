@@ -1,0 +1,166 @@
+<div class="entry-container" *ngIf="isLoaded">
+  <div class="entry">
+    <dx-form
+      id="form"
+      [formData]="entry"
+      colCount="12"
+      [disabled]="isDisabledEntry"
+    >
+      <dxi-item [colSpan]="1">
+        <div *dxTemplate>
+          <dx-text-box
+            stylingMode="outlined"
+            [(value)]="entry.backlogId"
+            placeholder="#BacklogID"
+            (onValueChanged)="onFieldChangeEvent($event, 'backlogId')"
+          >
+          </dx-text-box>
+        </div>
+      </dxi-item>
+      <dxi-item [colSpan]="1">
+        <div *dxTemplate>
+          <dx-text-box
+            stylingMode="outlined"
+            [(value)]="entry.taskId"
+            placeholder="#TaskID"
+            showDropDownButton="false"
+            (onValueChanged)="onFieldChangeEvent($event, 'taskId')"
+          >
+          </dx-text-box>
+        </div>
+      </dxi-item>
+      <dxi-item [colSpan]="3">
+        <div *dxTemplate>
+          <dx-text-box
+            stylingMode="outlined"
+            [(value)]="entry.name"
+            placeholder="What have you worked on?"
+            (onFocusOut)="onFieldChangeEvent($event, 'name')"
+          >
+          </dx-text-box>
+        </div>
+        <dxi-validation-rule type="required" message="This field is required">
+        </dxi-validation-rule>
+      </dxi-item>
+      <dxi-item [colSpan]="2">
+        <div *dxTemplate>
+          <dx-select-box
+            stylingMode="outlined"
+            [dataSource]="taskIdDataSource"
+            [grouped]="true"
+            displayExpr="activityName"
+            valueExpr="id"
+            [(value)]="entry.tsActivityId"
+            placeholder="Find task @Project"
+            [showClearButton]="false"
+            (onValueChanged)="onFieldChangeEvent($event, 'tsActivityId')"
+            (onInitialized)="onInitSelectTaskComp($event)"
+          >
+          </dx-select-box>
+        </div>
+      </dxi-item>
+      <dxi-item [colSpan]="1">
+        <div *dxTemplate>
+          <dx-date-box
+            stylingMode="outlined"
+            [(value)]="entry.startTime"
+            type="time"
+            displayFormat="HH:mm"
+            (onValueChanged)="onChangeStartTime($event)"
+            [invalidDateMessage]="invalidTimeMessage"
+          >
+          </dx-date-box>
+        </div>
+      </dxi-item>
+      <dxi-item [colSpan]="1">
+        <div *dxTemplate>
+          <dx-date-box
+            stylingMode="outlined"
+            [(value)]="entry.endTime"
+            type="time"
+            displayFormat="HH:mm"
+            (onValueChanged)="onChangeEndTime($event)"
+            [invalidDateMessage]="invalidTimeMessage"
+          >
+          </dx-date-box>
+        </div>
+      </dxi-item>
+      <dxi-item [colSpan]="2">
+        <div *dxTemplate>
+          <dx-date-box
+            stylingMode="outlined"
+            [value]="entryDate"
+            displayFormat="dd'/'MM'/'yyyy"
+            type="date"
+            (onValueChanged)="onValueChangedDateRecord($event)"
+            [min]="minRecordDate"
+            [invalidDateMessage]="invalidDateMessage"
+          >
+          </dx-date-box>
+        </div>
+      </dxi-item>
+      <dxi-item [colSpan]="1">
+        <div *dxTemplate>
+          <div class="entry-action">
+            <div class="entries-total">{{ entryTotalTime }}</div>
+            <div *ngIf="isDisabledEntry; else elseBlock">
+              <div
+                style="
+                  width: 100%;
+                  display: flex;
+                  align-items: flex-end;
+                  justify-content: center;
+                "
+              >
+                <img
+                  title="Can't edit locked timesheet. Contact your admin for more information"
+                  src="../../../../../../assets/time-sheet/locked.svg"
+                  width="30"
+                  height="30"
+                />
+              </div>
+            </div>
+            <ng-template #elseBlock>
+              <dx-button
+                width="auto"
+                stylingMode="contained"
+                text="Delete"
+                type="default"
+                (onClick)="onDeleteRecord($event)"
+              >
+              </dx-button>
+            </ng-template>
+          </div>
+        </div>
+      </dxi-item>
+    </dx-form>
+  </div>
+</div>
+<dx-popup
+  width="auto"
+  height="auto"
+  [showTitle]="true"
+  title="DELETE CONFIRM"
+  [dragEnabled]="true"
+  [closeOnOutsideClick]="false"
+  [showCloseButton]="true"
+  [(visible)]="popupConfirmDeleteVisible"
+>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [options]="confirmDeleteButtonOptions"
+  >
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="after"
+    [options]="closeDeletePopupButtonOptions"
+  >
+  </dxi-toolbar-item>
+  <div *dxTemplate="let data of 'content'">
+    Are you sure you want to delete this record?
+  </div>
+</dx-popup>

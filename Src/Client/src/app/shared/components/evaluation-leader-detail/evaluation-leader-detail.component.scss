@@ -1,0 +1,12 @@
+.text-content {
+  display: none;
+}
+
+::ng-deep #eld .dx-treelist-rowsview .dx-treelist-icon-container {
+  display: none;
+}
+
+
+::ng-deep .dx-overlay-content.dx-invalid-message-content.dx-resizable {
+  display: none;
+}

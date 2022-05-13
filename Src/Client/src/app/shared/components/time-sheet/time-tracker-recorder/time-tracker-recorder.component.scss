@@ -1,0 +1,13 @@
+:host .recorder-total {
+  color: #333;
+  line-height: 1 !important;
+  font-weight: 1000;
+  padding-left: 10px;
+  font-size: 15px;
+}
+
+:host .recorder-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}

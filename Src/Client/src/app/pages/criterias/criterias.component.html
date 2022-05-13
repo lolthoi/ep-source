@@ -1,0 +1,211 @@
+<h2>Evaluation Criteria Store</h2>
+<div id="criterias">
+  <dx-tree-list
+    [(dataSource)]="criterias"
+    rootValue="-1"
+    keyExpr="id"
+    [showRowLines]="true"
+    [showBorders]="true"
+    parentIdExpr="typeId"
+    [(focusedRowEnabled)]="focusedRowEnabled"
+    [(focusedRowIndex)]="focusedRowIndex"
+    [(autoExpandAll)]="expanded"
+    [columnAutoWidth]="true"
+    [wordWrapEnabled]="true"
+    (onInitialized)="onInitTreeList($event)"
+    (onToolbarPreparing)="onToolbarPreparing($event)"
+    (onRowPrepared)="onRowPrepared($event)"
+    (onFocusedRowChanged)="onFocusedRowChanged($event)"
+  >
+    <!-- (onCellDblClick)="oncellDblClick($event)" -->
+    <dxo-row-dragging
+      [onDragChange]="onDragChange"
+      [onReorder]="onReorder"
+      [(allowDropInsideItem)]="isEnableDrag"
+      [(allowReordering)]="isEnableDrag"
+      [showDragIcons]="false"
+    ></dxo-row-dragging>
+    <dxo-scrolling mode="standard"></dxo-scrolling>
+    <dxo-search-panel
+      [visible]="true"
+      [highlightSearchText]="true"
+      [width]="240"
+    ></dxo-search-panel>
+    <dxi-column
+      dataField="name"
+      [minWidth]="300"
+      [hidingPriority]="1"
+    ></dxi-column>
+    <dxi-column
+      dataField="description"
+      [minWidth]="300"
+      [hidingPriority]="2"
+    ></dxi-column>
+    <dxi-column
+      style="float: right"
+      [minWidth]="200"
+      cellTemplate="cellTemplate"
+      [hidingPriority]="1"
+    ></dxi-column>
+    <div *dxTemplate="let cell of 'cellTemplate'">
+      <div style="float: right; width: auto">
+        <dx-button
+          *ngIf="cell.data.typeId === null"
+          stylingMode="contained"
+          style="margin-left: 10px; margin-right: 10px"
+          hint="Add"
+          icon="plus"
+          type="success"
+          [(disabled)]="isEnableDrag"
+          (onClick)="onClickAdd($event, cell.data)"
+        >
+        </dx-button>
+        <dx-button
+          stylingMode="contained"
+          text="Detail"
+          hint="Detail"
+          type="default"
+          [(disabled)]="isEnableDrag"
+          (onClick)="oncellDblClick(cell)"
+        >
+        </dx-button>
+      </div>
+    </div>
+    <div *dxTemplate="let cell of 'myToolbarTemplate'">
+      <div style="float: right; width: auto">
+        <dx-button
+          style="margin-left: 10px"
+          stylingMode="contained"
+          text="Add"
+          icon="plus"
+          type="success"
+          (onInitialized)="onInitBtnAddType($event)"
+          (onClick)="onClickAddType($event)"
+        >
+        </dx-button>
+      </div>
+    </div>
+  </dx-tree-list>
+</div>
+<dx-popup
+  width="80%"
+  height="auto"
+  [maxWidth]="600"
+  [showTitle]="true"
+  [dragEnabled]="false"
+  [showCloseButton]="false"
+  (onInitialized)="onInitPopup($event)"
+  (onHiding)="onHidingPopup($event)"
+  (onShown)="onShowPopup($event)"
+  container=".dx-viewport"
+  [(visible)]="popupVisible"
+>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [visible]="!isViewDetail"
+    [options]="saveButtonOptions"
+  >
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [visible]="isViewDetail"
+    [options]="editButtonOptions"
+  >
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [visible]="isViewDetail"
+    [options]="deleteButtonOptions"
+  >
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="after"
+    [options]="closeButtonOptions"
+  >
+  </dxi-toolbar-item>
+  <dxo-position at="middler" my="center"> </dxo-position>
+  <div *dxTemplate="let data of 'content'">
+    <p *ngIf="!isAddOrEditType">
+      Criteria Type <span class="dx-field-item-required-mark">&nbsp;*</span>
+      <dx-select-box
+        [dataSource]="lookupData"
+        [readOnly]="isViewDetail"
+        displayExpr="name"
+        valueExpr="id"
+        [(value)]="criteriaModel.typeId"
+      >
+        <dx-validator>
+          <dxi-validation-rule
+            type="required"
+            message="Type is required"
+          ></dxi-validation-rule>
+        </dx-validator>
+      </dx-select-box>
+    </p>
+    <div *ngIf="isAddOrEditType">
+      Criteria Type Name
+      <span class="dx-field-item-required-mark">&nbsp;*</span>
+    </div>
+    <div *ngIf="!isAddOrEditType">
+      Criteria Name <span class="dx-field-item-required-mark">&nbsp;*</span>
+    </div>
+    <dx-text-box
+      (onInitialized)="onInitTbName($event)"
+      [(value)]="criteriaModel.name"
+      [readOnly]="isViewDetail"
+    >
+      <dx-validator>
+        <dxi-validation-rule type="required" message="Name is required">
+        </dxi-validation-rule>
+        <dxi-validation-rule
+          type="stringLength"
+          [max]="255"
+          message="The name should not contain more than 255 characters"
+        ></dxi-validation-rule>
+      </dx-validator>
+    </dx-text-box>
+    <p style="margin-top: 30px">
+      Description
+      <dx-text-area
+        [height]="90"
+        [(value)]="criteriaModel.description"
+        [readOnly]="isViewDetail"
+      >
+        <dx-validator>
+          <dxi-validation-rule
+            type="stringLength"
+            [max]="500"
+            message="The description should not contain more than 500 characters"
+          >
+          </dxi-validation-rule>
+        </dx-validator>
+      </dx-text-area>
+    </p>
+  </div>
+</dx-popup>
+<style>
+  .dx-popover-wrapper .dx-overlay-content {
+    overflow: visible;
+    transform: translate(306px, 210px) !important;
+  }
+</style>
+
+<dx-load-panel
+  #loadPanel
+  shadingColor="rgba(0,0,0,0.4)"
+  [position]="{ of: '#criterias' }"
+  [(visible)]="loading"
+  [showIndicator]="true"
+  [showPane]="true"
+  [shading]="true"
+  [closeOnOutsideClick]="false"
+>
+</dx-load-panel>

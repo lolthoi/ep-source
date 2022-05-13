@@ -1,0 +1,121 @@
+<h2>Work Space Setting Manager</h2>
+
+<div style="background-color: #fff; padding: 20px">
+  <form (submit)="onSubmit($event)">
+    <dx-form
+      id="form"
+      [(formData)]="workSpaceSettingForm"
+      [colCount]="1"
+      width="auto"
+    >
+      <dxi-item name="lockTime" template="lockTime"> </dxi-item>
+
+      <dxi-item name="lockingTime" template="lockingTime"> </dxi-item>
+
+      <dxi-item name="timesheetLockCycle" template="timesheetLockCycle">
+      </dxi-item>
+
+      <dxi-item itemType="button" [visible]="isAdminRole">
+        <dxo-button-options
+          width="auto"
+          type="success"
+          [useSubmitBehavior]="true"
+          text="Save"
+        >
+        </dxo-button-options>
+      </dxi-item>
+
+      <div *dxTemplate="let data of 'lockTime'">
+        <div width="100%" style="display: flex">
+          <div style="width: 30%">
+            <p>Timesheet is locked automatically</p>
+          </div>
+          <div style="width: 70%">
+            <dx-check-box
+              [(value)]="workSpaceSettingForm.lockTime"
+              [readOnly]="!isAdminRole"
+            >
+            </dx-check-box>
+          </div>
+        </div>
+      </div>
+
+      <div *dxTemplate="let data of 'lockingTime'">
+        <div width="100%" style="display: flex">
+          <div style="width: 30%">
+            <p>Locking Time</p>
+          </div>
+          <div style="width: 70%">
+            <dx-date-box
+              [(value)]="workSpaceSettingForm.lockingTime"
+              [disabled]="!workSpaceSettingForm.lockTime"
+              [readOnly]="!isAdminRole"
+              type="time"
+              displayFormat="HH:mm"
+              useMaskBehavior="true"
+              placeholder="HH:mm"
+            >
+              <dx-validator>
+                <dxi-validation-rule
+                  type="custom"
+                  message="Please enter the locking time."
+                  reevaluate="true"
+                  [validationCallback]="onValidationCallBackLockingTime"
+                >
+                </dxi-validation-rule>
+              </dx-validator>
+            </dx-date-box>
+          </div>
+        </div>
+      </div>
+
+      <div *dxTemplate="let data of 'timesheetLockCycle'">
+        <div width="100%" style="display: flex">
+          <div style="width: 30%">
+            <p>Locking Timesheet Schedule</p>
+          </div>
+          <div style="width: 60%">
+            <dx-number-box
+              [(value)]="workSpaceSettingForm.timesheetLockCycle"
+              [disabled]="!workSpaceSettingForm.lockTime"
+              [readOnly]="!isAdminRole"
+              min="1"
+              max="999999"
+            >
+              <dx-validator>
+                <dxi-validation-rule
+                  type="custom"
+                  message="Please enter the Timesheet Cyclization."
+                  reevaluate="true"
+                  [validationCallback]="onValidationCallBackTimesheetLockCycle"
+                >
+                </dxi-validation-rule>
+
+                <dxi-validation-rule
+                  type="custom"
+                  message="The minimum value of this field is 1"
+                  reevaluate="true"
+                  [validationCallback]="
+                    onValidationCallBackMinTimesheetLockCycle
+                  "
+                >
+                </dxi-validation-rule>
+
+                <dxi-validation-rule
+                  type="custom"
+                  message="The max value of this field is 999999"
+                  reevaluate="true"
+                  [validationCallback]="
+                    onValidationCallBackMinTimesheetLockCycle
+                  "
+                >
+                </dxi-validation-rule>
+              </dx-validator>
+            </dx-number-box>
+          </div>
+          <div style="width: 10%">(day(s))</div>
+        </div>
+      </div>
+    </dx-form>
+  </form>
+</div>

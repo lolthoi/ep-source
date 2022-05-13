@@ -1,0 +1,40 @@
+<dx-popup
+  [maxWidth]="800"
+  height="auto"
+  maxHeight="70%"
+  [showTitle]="true" 
+  title="SELF EVALUATE" 
+  [dragEnabled]="true"
+  [closeOnOutsideClick]="false" 
+  [showCloseButton]="true" 
+  [(visible)]="popupVisible"
+  (onHidden)="onHiddenPopup($event)">
+  <dxo-position
+        my="top"
+        at="top"
+        offset="0 125">
+    </dxo-position>
+  <dx-scroll-view>
+    <app-evaluation-user-detail
+        [readOnly]="false"
+        [popupVisible]="popupVisible"
+        [isUserSelfEvaluated]="true"
+        (onSuccessSavePersonalEvaluate)="onSuccessSavePersonalEvaluate()"
+        (onShowSubmitButton)="showSaveButton($event)"
+        [(isDoneSelectQuarter)]="buttonSubmitVisible">
+    </app-evaluation-user-detail>
+</dx-scroll-view>
+    <dxi-toolbar-item
+        id="saveButton"
+        widget="dxButton"
+        toolbar="bottom"
+        location="before"
+        [options]="saveButtonOptions">
+    </dxi-toolbar-item>
+    <dxi-toolbar-item
+        widget="dxButton"
+        toolbar="bottom"
+        location="after"
+        [(options)]="closeButtonOptions">
+    </dxi-toolbar-item>
+</dx-popup>

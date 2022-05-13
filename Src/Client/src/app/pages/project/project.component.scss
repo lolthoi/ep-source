@@ -1,0 +1,14 @@
+// ::ng-deep div.dx-overlay-wrapper.dx-popup-wrapper.dx-popover-wrapper.dx-dropdownmenu-popup-wrapper.dx-dropdownmenu-popup.dx-popover-without-title.dx-position-bottom
+//  div.dx-overlay-content.dx-popup-normal.dx-resizable{
+//    position: absolute;
+//    left: 80%px !important;
+// // transform: translate(170%, 50%) !important;
+// }
+
+::ng-deep div.dx-overlay-wrapper.dx-popup-wrapper.dx-popover-wrapper.dx-dropdownmenu-popup-wrapper.dx-popover-without-title.dx-position-bottom
+ div.dx-overlay-content.dx-popup-normal.dx-resizable{
+  // transform: translate(170%, 50%) !important;
+  position: absolute;
+   left: 80% !important;
+   min-width: 365px;
+}

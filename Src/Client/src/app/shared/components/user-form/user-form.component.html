@@ -1,0 +1,214 @@
+<dx-popup
+  width="50%"
+  maxWidth="600"
+  minWidth="300"
+  height="auto"
+  maxHeight="650px"
+  [showTitle]="true"
+  [(title)]="popupTitle"
+  [dragEnabled]="true"
+  [closeOnOutsideClick]="false"
+  [showCloseButton]="true"
+  [(visible)]="popupVisible"
+  (onShown)="setFocus($event)"
+>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [visible]="model.state === formState.CREATE"
+    [options]="createButtonOptions"
+    [(disabled)]="disableSubmitButton"
+  >
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [visible]="model.state === formState.EDIT && isAdminRole == true"
+    [options]="editButtonOptions"
+    [(disabled)]="disableSubmitButton"
+  >
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [visible]="model.state === formState.DETAIL && isAdminRole == true"
+    [options]="enterEditFormButtonOptions"
+  >
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [visible]="model.state === formState.DETAIL && isAdminRole == true"
+    [options]="deleteButtonOptions"
+  >
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="after"
+    [options]="closeButtonOptions"
+    [(disabled)]="disableSubmitButton"
+  >
+  </dxi-toolbar-item>
+  <div *dxTemplate="let data of 'content'">
+    <dx-scroll-view width="auto" height="100%">
+      <dx-form
+        id="form"
+        [formData]="currUser"
+        [colCount]="2"
+        [readOnly]="model.state === formState.DETAIL"
+      >
+        <dxi-item dataField="firstName" editorType="dxTextBox">
+          <dxi-validation-rule
+            type="required"
+            message="First name is required"
+            [visible]="model.state === formState.DETAIL"
+          >
+          </dxi-validation-rule>
+        </dxi-item>
+        <dxi-item dataField="lastName" editorType="dxTextBox">
+          <dxi-validation-rule
+            type="required"
+            message="Last name is required"
+            [visible]="model.state === formState.DETAIL"
+          >
+          </dxi-validation-rule>
+        </dxi-item>
+        <dxi-item
+          dataField="email"
+          editorType="dxTextBox"
+          helpText="Email must have domain @kloon.vn"
+        >
+          <dxi-validation-rule
+            type="pattern"
+            [pattern]="emailPattern"
+            message="Email is wrong format"
+            [visible]="model.state === formState.DETAIL"
+          >
+          </dxi-validation-rule>
+          <dxi-validation-rule
+            type="required"
+            message="Email is required"
+            [visible]="model.state === formState.DETAIL"
+          >
+          </dxi-validation-rule>
+        </dxi-item>
+        <dxi-item
+          dataField="sex"
+          editorType="dxSelectBox"
+          [editorOptions]="{
+            dataSource: sexDataSource,
+            displayExpr: 'caption',
+            valueExpr: 'value'
+          }"
+        >
+          <dxi-validation-rule
+            type="required"
+            message="Sex is required"
+            [visible]="model.state === formState.DETAIL"
+          >
+          </dxi-validation-rule>
+        </dxi-item>
+
+        <dxi-item
+          dataField="roleId"
+          [label]="{ text: 'Role' }"
+          editorType="dxSelectBox"
+          [editorOptions]="{
+            dataSource: roleDataSource,
+            displayExpr: 'caption',
+            valueExpr: 'value'
+          }"
+        >
+          <dxi-validation-rule
+            type="required"
+            message="Role is required"
+            [visible]="model.state === formState.DETAIL"
+          >
+          </dxi-validation-rule>
+        </dxi-item>
+        <dxi-item
+          dataField="positionId"
+          [label]="{ text: 'Position' }"
+          editorType="dxSelectBox"
+          [editorOptions]="{
+            dataSource: position,
+            displayExpr: 'name',
+            valueExpr: 'id'
+          }"
+        >
+          <dxi-validation-rule
+            type="required"
+            message="Position is required"
+            [visible]="model.state === formState.DETAIL"
+          >
+          </dxi-validation-rule>
+        </dxi-item>
+        <dxi-item
+          dataField="phoneNo"
+          editorType="dxTextBox"
+          [editorOptions]="{ mask: '0000-0000-00' }"
+        >
+          <dxi-validation-rule
+            type="pattern"
+            [pattern]="phonePattern"
+          ></dxi-validation-rule>
+        </dxi-item>
+
+        <dxi-item
+          dataField="doB"
+          [label]="{ text: 'Date of birth' }"
+          editorType="dxDateBox"
+          [editorOptions]="{
+            min: '1/1/1000',
+            width: '100%',
+            type: 'date',
+            displayFormat: 'dd/MM/yyyy',
+            invalidDateMessage: 'Date of birth must be datetime format.',
+            dateOutOfRangeMessage: 'Date of birth must be datetime format.'
+          }"
+        >
+        </dxi-item>
+
+        <dxi-item
+          dataField="status"
+          [label]="{ text: 'Active' }"
+          editorType="dxCheckBox"
+        >
+        </dxi-item>
+      </dx-form>
+    </dx-scroll-view>
+  </div>
+</dx-popup>
+<dx-popup
+  width="auto"
+  height="auto"
+  [showTitle]="true"
+  title="DELETE CONFIRM"
+  [dragEnabled]="true"
+  [closeOnOutsideClick]="false"
+  [showCloseButton]="true"
+  [(visible)]="popupConfirmDeleteVisible"
+>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [options]="confirmDeleteButtonOptions"
+  >
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="after"
+    [options]="closeDeletePopupButtonOptions"
+  >
+  </dxi-toolbar-item>
+  <div *dxTemplate="let data of 'content'">
+    Are you sure you want to delete this record?
+  </div>
+</dx-popup>

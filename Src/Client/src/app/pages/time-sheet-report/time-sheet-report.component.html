@@ -1,0 +1,1068 @@
+<h2>Report</h2>
+
+<div id="timeSheetReport">
+  <dx-tab-panel [(selectedIndex)]="selectedIndex">
+    <!-- Project report -->
+    <dxi-item title="Project" [visible]="projectShow">
+      <div *dxTemplate="let data of 'content'">
+        <div>
+          <dx-form
+            id="Projectform"
+            [(formData)]="projectParams"
+            [colCount]="3"
+            width="auto"
+          >
+            <dxi-item [label]="{ text: 'Project/Group' }">
+              <dx-drop-down-box
+                [(value)]="selectedRowKeysGroup"
+                displayExpr="name"
+                placeholder="Select..."
+                [showClearButton]="true"
+                [dataSource]="listManagerGroup"
+                valueExpr="id"
+              >
+                <div *dxTemplate="let data of 'content'">
+                  <dx-data-grid
+                    class="selectProject"
+                    [dataSource]="listManagerGroup"
+                    keyExpr="id"
+                    [columns]="['name']"
+                    [selection]="{ mode: 'multiple' }"
+                    [hoverStateEnabled]="true"
+                    [filterRow]="{
+                      visible: true,
+                      showOperationChooser: false
+                    }"
+                    [filterOperations]="['contains', '=']"
+                    [scrolling]="{ mode: 'virtual' }"
+                    [height]="345"
+                    (onSelectionChanged)="onSelectFilterProject($event)"
+                    [(selectedRowKeys)]="selectedRowKeysGroup"
+                  >
+                  </dx-data-grid>
+                </div>
+              </dx-drop-down-box>
+            </dxi-item>
+            <dxi-item dataField="year" [label]="{ text: 'Year' }">
+              <dx-select-box
+                [dataSource]="YearDataSourceProject"
+                displayExpr="value"
+                [value]="currentYearProject"
+                valueExpr="id"
+                (onSelectionChanged)="changeYearProject($event)"
+              ></dx-select-box>
+            </dxi-item>
+            <dxi-item
+              itemType="button"
+              [cssClass]="'line-height'"
+              [buttonOptions]="FilterProjectReport"
+            >
+            </dxi-item>
+          </dx-form>
+        </div>
+
+        <dx-data-grid
+          id="gridProjectRecord"
+          [dataSource]="projectTimeRecord"
+          keyExpr="projectId"
+          [showBorders]="true"
+          [focusedRowEnabled]="false"
+        >
+          <dxo-paging [pageSize]="10"> </dxo-paging>
+
+          <dxo-pager
+            [allowedPageSizes]="[5, 10]"
+            [showPageSizeSelector]="true"
+            [showNavigationButtons]="true"
+          >
+          </dxo-pager>
+
+          <dxi-column dataField="name" caption="Project"> </dxi-column>
+          <dxi-column
+            dataField="january"
+            caption="Jan"
+            [width]="90"
+            alignment="left"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="february"
+            caption="Feb"
+            [width]="90"
+            alignment="left"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="march"
+            caption="Mar"
+            [width]="90"
+            alignment="left"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="april"
+            caption="Apr"
+            [width]="90"
+            alignment="left"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="may"
+            caption="May"
+            [width]="90"
+            alignment="left"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="june"
+            caption="Jun"
+            [width]="90"
+            alignment="left"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="july"
+            caption="Jul"
+            [width]="90"
+            alignment="left"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="august"
+            caption="Aug"
+            [width]="90"
+            alignment="left"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="september"
+            caption="Sep"
+            [width]="90"
+            alignment="left"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="october"
+            caption="Oct"
+            [width]="90"
+            alignment="left"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="november"
+            caption="Nov"
+            [width]="90"
+            alignment="left"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="december"
+            caption="Dec"
+            [width]="90"
+            alignment="left"
+          >
+          </dxi-column>
+        </dx-data-grid>
+      </div>
+    </dxi-item>
+    <!-- End Project report -->
+
+    <!-- Project Activity report -->
+    <dxi-item title="Project Activity" [visible]="isManager">
+      <div *dxTemplate="let data of 'content'">
+        <div>
+          <dx-form
+            id="Userform"
+            [(formData)]="projectActivityParams"
+            [colCount]="7"
+            width="auto"
+          >
+            <dxi-item [label]="{ text: 'Project/Group' }" [colSpan]="2">
+              <dx-drop-down-box
+                [(value)]="selectedRowKeysProjectGroupActivity"
+                displayExpr="name"
+                placeholder="Select..."
+                [showClearButton]="true"
+                [dataSource]="listManagerGroup"
+                valueExpr="id"
+              >
+                <div *dxTemplate="let data of 'content'">
+                  <dx-data-grid
+                    class="selectProject"
+                    [dataSource]="listManagerGroup"
+                    keyExpr="id"
+                    [columns]="['name']"
+                    [selection]="{ mode: 'multiple' }"
+                    [hoverStateEnabled]="true"
+                    [filterRow]="{
+                      visible: true,
+                      showOperationChooser: false
+                    }"
+                    [filterOperations]="['contains', '=']"
+                    [scrolling]="{ mode: 'virtual' }"
+                    [height]="345"
+                    (onSelectionChanged)="onSelectFilterProjectActivity($event)"
+                    [(selectedRowKeys)]="selectedRowKeysProjectGroupActivity"
+                  >
+                  </dx-data-grid>
+                </div>
+              </dx-drop-down-box>
+            </dxi-item>
+            <dxi-item [label]="{ text: 'Activity' }" [colSpan]="2">
+              <dx-drop-down-box
+                [(value)]="selectedRowKeysProjectActivity"
+                displayExpr="activityName"
+                placeholder="Select..."
+                [showClearButton]="true"
+                [dataSource]="listManagerActivity"
+                valueExpr="id"
+              >
+                <div *dxTemplate="let data of 'content'">
+                  <dx-data-grid
+                    [dataSource]="listManagerActivity"
+                    keyExpr="id"
+                    [columns]="['activityName']"
+                    [selection]="{ mode: 'multiple' }"
+                    [hoverStateEnabled]="true"
+                    [filterRow]="{ visible: true, showOperationChooser: false }"
+                    [scrolling]="{ mode: 'virtual' }"
+                    [height]="345"
+                    (onSelectionChanged)="onSelectTaskProjectActivity($event)"
+                    [(selectedRowKeys)]="selectedRowKeysProjectActivity"
+                  >
+                  </dx-data-grid>
+                </div>
+              </dx-drop-down-box>
+            </dxi-item>
+
+            <dxi-item [label]="{ text: 'Start Date' }" [colSpan]="1">
+              <div *dxTemplate>
+                <dx-date-box
+                  [(value)]="projectActivityParams.startDate"
+                  type="date"
+                  displayFormat="dd'/'MM'/'yyyy"
+                  placeholder="dd/mm/yyyy"
+                  (onValueChanged)="onChangedStartDateProjectActivity($event)"
+                >
+                </dx-date-box>
+              </div>
+            </dxi-item>
+
+            <dxi-item [label]="{ text: 'End Date' }" [colSpan]="1">
+              <div *dxTemplate>
+                <dx-date-box
+                  [(value)]="projectActivityParams.endDate"
+                  type="date"
+                  displayFormat="dd'/'MM'/'yyyy"
+                  placeholder="dd/mm/yyyy"
+                  (onValueChanged)="onChangedEndDateProjectActivity($event)"
+                >
+                </dx-date-box>
+              </div>
+            </dxi-item>
+
+            <dxi-item
+              [colSpan]="1"
+              itemType="button"
+              [cssClass]="'line-height'"
+              [buttonOptions]="FilterProjectActivityReport"
+            >
+            </dxi-item>
+          </dx-form>
+        </div>
+
+        <dx-data-grid
+          id="gridContainer"
+          [dataSource]="projectActivityReport"
+          [allowColumnReordering]="false"
+          [showBorders]="true"
+        >
+          <dxi-column
+            dataField="activityName"
+            [allowGrouping]="false"
+            sortOrder="asc"
+          ></dxi-column>
+
+          <dxi-column
+            dataField="totalHour"
+            caption="Hour(s)"
+            alignment="left"
+            [allowGrouping]="false"
+          >
+          </dxi-column>
+
+          <dxi-column
+            dataField="groupName"
+            [groupIndex]="0"
+            caption="Project"
+            [allowGrouping]="false"
+            [(sortOrder)]="projectSortOrder"
+          ></dxi-column>
+
+          <dxo-paging [pageSize]="20"></dxo-paging>
+          <dxo-group-panel [visible]="true"></dxo-group-panel>
+          <dxo-grouping
+            #expand
+            [autoExpandAll]="true"
+            expandMode="rowClick"
+          ></dxo-grouping>
+
+          <dxo-summary>
+            <dxi-group-item
+              column="totalHour"
+              summaryType="sum"
+              displayFormat="Total: {0}"
+              [showInGroupFooter]="false"
+              [alignByColumn]="true"
+            >
+            </dxi-group-item>
+            <!-- <dxi-group-item
+              column="ProjectOrder"
+              summaryType="min"
+              [alignByColumn]="true"
+            >
+            </dxi-group-item> -->
+          </dxo-summary>
+          <!-- <dxi-sort-by-group-summary-info
+            summaryItem="ProjectOrder"
+          ></dxi-sort-by-group-summary-info> -->
+        </dx-data-grid>
+      </div>
+    </dxi-item>
+    <!-- End Project Activity report -->
+
+    <!-- User report -->
+    <dxi-item title="User">
+      <div *dxTemplate="let data of 'content'">
+        <div>
+          <dx-form
+            id="Userform"
+            [(formData)]="userParams"
+            [colCount]="4"
+            width="auto"
+          >
+            <dxi-item
+              [label]="{ text: 'Team' }"
+              [colSpan]="1"
+              [visible]="isManager || isQa"
+            >
+              <dx-drop-down-box
+                [(value)]="selectedRowKeysTeamUser"
+                displayExpr="name"
+                placeholder="Select..."
+                [showClearButton]="true"
+                [dataSource]="listTeam"
+                valueExpr="id"
+              >
+                <div *dxTemplate="let data of 'content'">
+                  <dx-data-grid
+                    [dataSource]="listTeam"
+                    keyExpr="id"
+                    [columns]="['name']"
+                    [selection]="{ mode: 'multiple' }"
+                    [hoverStateEnabled]="true"
+                    [filterRow]="{ visible: true, showOperationChooser: false }"
+                    [scrolling]="{ mode: 'virtual' }"
+                    [height]="345"
+                    (onSelectionChanged)="onSelectTeamUser($event)"
+                    [(selectedRowKeys)]="selectedRowKeysTeamUser"
+                  >
+                  </dx-data-grid>
+                </div>
+              </dx-drop-down-box>
+            </dxi-item>
+            <dxi-item [label]="{ text: 'User' }">
+              <dx-drop-down-box
+                [dataSource]="listUser"
+                [(value)]="selectedRowKeysUserFilter"
+                valueExpr="id"
+                displayExpr="fullName"
+                placeholder="Select..."
+                [showClearButton]="true"
+                [disabled]="!projectShow"
+              >
+                <div *dxTemplate="let data of 'content'">
+                  <dx-data-grid
+                    class="selectUser"
+                    [dataSource]="listUser"
+                    keyExpr="id"
+                    [columns]="['fullName']"
+                    [selection]="{ mode: 'multiple' }"
+                    [hoverStateEnabled]="true"
+                    [filterRow]="{ visible: true, showOperationChooser: false }"
+                    [scrolling]="{ mode: 'virtual' }"
+                    [height]="345"
+                    (onSelectionChanged)="onSelectUserUser($event)"
+                    [(selectedRowKeys)]="selectedRowKeysUserFilter"
+                  >
+                  </dx-data-grid>
+                </div>
+              </dx-drop-down-box>
+            </dxi-item>
+            <dxi-item [label]="{ text: 'Year' }" [colSpan]="1">
+              <dx-select-box
+                [dataSource]="YearDataSourceUser"
+                displayExpr="value"
+                [value]="currentYearUser"
+                valueExpr="id"
+                (onSelectionChanged)="changeYearUser($event)"
+              ></dx-select-box>
+            </dxi-item>
+            <dxi-item
+              [colSpan]="2"
+              itemType="button"
+              [cssClass]="'line-height'"
+              [buttonOptions]="FilterUserReport"
+            >
+            </dxi-item>
+          </dx-form>
+        </div>
+
+        <dx-data-grid
+          id="gridUserRecord"
+          [dataSource]="userTimeRecord"
+          keyExpr="userId"
+          [showBorders]="true"
+          [focusedRowEnabled]="false"
+        >
+          <dxo-paging [pageSize]="10"> </dxo-paging>
+
+          <dxo-pager
+            [allowedPageSizes]="[10, 20, 30]"
+            [showPageSizeSelector]="true"
+            [showNavigationButtons]="true"
+          >
+          </dxo-pager>
+
+          <dxi-column dataField="fullName"> </dxi-column>
+          <dxi-column dataField="email"> </dxi-column>
+          <dxi-column
+            dataField="january"
+            caption="Jan"
+            [width]="90"
+            alignment="left"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="february"
+            caption="Feb"
+            [width]="90"
+            alignment="left"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="march"
+            caption="Mar"
+            [width]="90"
+            alignment="left"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="april"
+            caption="Apr"
+            [width]="90"
+            alignment="left"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="may"
+            caption="May"
+            [width]="90"
+            alignment="left"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="june"
+            caption="Jun"
+            [width]="90"
+            alignment="left"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="july"
+            caption="Jul"
+            [width]="90"
+            alignment="left"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="august"
+            caption="Aug"
+            [width]="90"
+            alignment="left"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="september"
+            caption="Sep"
+            [width]="90"
+            alignment="left"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="october"
+            caption="Oct"
+            [width]="90"
+            alignment="left"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="november"
+            caption="Nov"
+            [width]="90"
+            alignment="left"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="december"
+            caption="Dec"
+            [width]="90"
+            alignment="left"
+          >
+          </dxi-column>
+        </dx-data-grid>
+      </div>
+    </dxi-item>
+    <!-- End User report -->
+
+    <!-- User Activity report -->
+    <dxi-item title="User Activity" [visible]="isManager">
+      <div *dxTemplate="let data of 'content'">
+        <div>
+          <dx-form
+            id="Userform"
+            [(formData)]="userActivityParams"
+            [colCount]="9"
+            width="auto"
+          >
+            <dxi-item
+              [label]="{ text: 'Team' }"
+              [colSpan]="2"
+              [visible]="isManager"
+            >
+              <dx-drop-down-box
+                [(value)]="selectedRowKeysTeamUserActivity"
+                displayExpr="name"
+                placeholder="Select..."
+                [showClearButton]="true"
+                [dataSource]="listTeam"
+                valueExpr="id"
+              >
+                <div *dxTemplate="let data of 'content'">
+                  <dx-data-grid
+                    [dataSource]="listTeam"
+                    keyExpr="id"
+                    [columns]="['name']"
+                    [selection]="{ mode: 'multiple' }"
+                    [hoverStateEnabled]="true"
+                    [filterRow]="{ visible: true, showOperationChooser: false }"
+                    [scrolling]="{ mode: 'virtual' }"
+                    [height]="345"
+                    (onSelectionChanged)="onSelectTeamUserActivity($event)"
+                    [(selectedRowKeys)]="selectedRowKeysTeamUserActivity"
+                  >
+                  </dx-data-grid>
+                </div>
+              </dx-drop-down-box>
+            </dxi-item>
+
+            <dxi-item [label]="{ text: 'User' }" [colSpan]="2">
+              <dx-drop-down-box
+                [dataSource]="listUser"
+                valueExpr="id"
+                [(value)]="selectedRowKeysUserFilter"
+                displayExpr="fullName"
+                placeholder="Select..."
+                [showClearButton]="true"
+                [disabled]="!projectShow"
+              >
+                <div *dxTemplate="let data of 'content'">
+                  <dx-data-grid
+                    class="selectUser"
+                    [dataSource]="listUser"
+                    keyExpr="id"
+                    [columns]="['fullName']"
+                    [selection]="{ mode: 'multiple' }"
+                    [hoverStateEnabled]="true"
+                    [filterRow]="{ visible: true, showOperationChooser: false }"
+                    [scrolling]="{ mode: 'virtual' }"
+                    [height]="345"
+                    (onSelectionChanged)="onSelectUserUserActivity($event)"
+                    [(selectedRowKeys)]="selectedRowKeysUserFilter"
+                  >
+                  </dx-data-grid>
+                </div>
+              </dx-drop-down-box>
+            </dxi-item>
+            <dxi-item [label]="{ text: 'Activity' }" [colSpan]="2">
+              <dx-drop-down-box
+                [(value)]="selectedRowKeysUserActivity"
+                displayExpr="activityName"
+                placeholder="Select..."
+                [showClearButton]="true"
+                [dataSource]="listActivity"
+                valueExpr="id"
+              >
+                <div *dxTemplate="let data of 'content'">
+                  <dx-data-grid
+                    [dataSource]="listActivity"
+                    keyExpr="id"
+                    [columns]="['activityName']"
+                    [selection]="{ mode: 'multiple' }"
+                    [hoverStateEnabled]="true"
+                    [filterRow]="{ visible: true, showOperationChooser: false }"
+                    [scrolling]="{ mode: 'virtual' }"
+                    [height]="345"
+                    (onSelectionChanged)="onSelectActivityUserActivity($event)"
+                    [(selectedRowKeys)]="selectedRowKeysUserActivity"
+                  >
+                  </dx-data-grid>
+                </div>
+              </dx-drop-down-box>
+            </dxi-item>
+
+            <dxi-item [label]="{ text: 'Start Date' }" [colSpan]="1">
+              <div *dxTemplate>
+                <dx-date-box
+                  [(value)]="userActivityParams.startDate"
+                  type="date"
+                  displayFormat="dd'/'MM'/'yyyy"
+                  placeholder="dd/mm/yyyy"
+                  (onValueChanged)="onChangedStartDateUserActivity($event)"
+                >
+                </dx-date-box>
+              </div>
+            </dxi-item>
+
+            <dxi-item [label]="{ text: 'End Date' }" [colSpan]="1">
+              <div *dxTemplate>
+                <dx-date-box
+                  [(value)]="userActivityParams.endDate"
+                  type="date"
+                  displayFormat="dd'/'MM'/'yyyy"
+                  placeholder="dd/mm/yyyy"
+                  (onValueChanged)="onChangedEndDateUserActivity($event)"
+                >
+                </dx-date-box>
+              </div>
+            </dxi-item>
+
+            <dxi-item
+              [colSpan]="1"
+              itemType="button"
+              [cssClass]="'line-height'"
+              [buttonOptions]="FilterUserActivityReport"
+            >
+            </dxi-item>
+          </dx-form>
+        </div>
+
+        <dx-data-grid
+          id="gridContainer"
+          [dataSource]="userActivityReport"
+          [allowColumnReordering]="false"
+          [showBorders]="true"
+        >
+          <dxi-column
+            dataField="activityName"
+            [allowGrouping]="false"
+            sortOrder="asc"
+          ></dxi-column>
+          <dxi-column
+            dataField="totalHour"
+            caption="Hour(s)"
+            alignment="left"
+            [allowGrouping]="false"
+          >
+          </dxi-column>
+
+          <dxi-column
+            dataField="fullName"
+            [groupIndex]="0"
+            caption="User"
+            [allowGrouping]="false"
+          ></dxi-column>
+
+          <dxo-paging [pageSize]="20"></dxo-paging>
+          <dxo-group-panel [visible]="true"></dxo-group-panel>
+          <dxo-grouping
+            #expand
+            [autoExpandAll]="true"
+            expandMode="rowClick"
+          ></dxo-grouping>
+          <dxo-summary>
+            <dxi-group-item
+              column="totalHour"
+              summaryType="sum"
+              displayFormat="Total: {0}"
+              [showInGroupFooter]="false"
+              [alignByColumn]="true"
+            >
+            </dxi-group-item>
+          </dxo-summary>
+        </dx-data-grid>
+      </div>
+    </dxi-item>
+    <!-- End User Activity report -->
+
+    <!-- Detail report -->
+    <dxi-item title="Detail">
+      <div *dxTemplate="let data of 'content'">
+        <!-- Filter form -->
+        <div>
+          <dx-form
+            id="form"
+            [(formData)]="timeSheetReportDetailRouterModel"
+            [(colCount)]="detailCol"
+            width="auto"
+          >
+            <dxi-item
+              [label]="{ text: 'Team' }"
+              [colSpan]="2"
+              [visible]="isManager || isQa"
+            >
+              <dx-drop-down-box
+                [(value)]="selectedRowKeysTeamDetail"
+                displayExpr="name"
+                placeholder="Select..."
+                [showClearButton]="true"
+                [dataSource]="listTeam"
+                valueExpr="id"
+              >
+                <div *dxTemplate="let data of 'content'">
+                  <dx-data-grid
+                    [dataSource]="listTeam"
+                    keyExpr="id"
+                    [columns]="['name']"
+                    [selection]="{ mode: 'multiple' }"
+                    [hoverStateEnabled]="true"
+                    [filterRow]="{ visible: true, showOperationChooser: false }"
+                    [scrolling]="{ mode: 'virtual' }"
+                    [height]="345"
+                    (onSelectionChanged)="onSelectTeamUserDetail($event)"
+                    [(selectedRowKeys)]="selectedRowKeysTeamDetail"
+                  >
+                  </dx-data-grid>
+                </div>
+              </dx-drop-down-box>
+            </dxi-item>
+
+            <dxi-item
+              [label]="{ text: 'User' }"
+              [visible]="projectShow"
+              [colSpan]="2"
+            >
+              <dx-drop-down-box
+                [(value)]="selectedRowKeysUserDetail"
+                displayExpr="fullName"
+                placeholder="Select..."
+                [showClearButton]="true"
+                [dataSource]="listUser"
+                valueExpr="id"
+              >
+                <div *dxTemplate="let data of 'content'">
+                  <dx-data-grid
+                    class="selectUser"
+                    [dataSource]="listUser"
+                    keyExpr="id"
+                    [columns]="['fullName']"
+                    [selection]="{ mode: 'multiple' }"
+                    [hoverStateEnabled]="true"
+                    [filterRow]="{ visible: true, showOperationChooser: false }"
+                    [scrolling]="{ mode: 'virtual' }"
+                    [height]="345"
+                    (onSelectionChanged)="onSelectUserDetail($event)"
+                    [(selectedRowKeys)]="selectedRowKeysUserDetail"
+                  >
+                  </dx-data-grid>
+                </div>
+              </dx-drop-down-box>
+            </dxi-item>
+            <dxi-item [label]="{ text: 'Project/Group' }" [colSpan]="2">
+              <dx-drop-down-box
+                [(value)]="selectedRowKeysGroupDetail"
+                displayExpr="name"
+                placeholder="Select..."
+                [showClearButton]="true"
+                [dataSource]="listGroup"
+                valueExpr="id"
+              >
+                <div *dxTemplate="let data of 'content'">
+                  <dx-data-grid
+                    [dataSource]="listGroup"
+                    keyExpr="id"
+                    [columns]="['name']"
+                    [selection]="{ mode: 'multiple' }"
+                    [hoverStateEnabled]="true"
+                    [filterRow]="{ visible: true, showOperationChooser: false }"
+                    [scrolling]="{ mode: 'virtual' }"
+                    [height]="345"
+                    (onSelectionChanged)="onSelectGroupDetail($event)"
+                    [(selectedRowKeys)]="selectedRowKeysGroupDetail"
+                  >
+                  </dx-data-grid>
+                </div>
+              </dx-drop-down-box>
+            </dxi-item>
+            <dxi-item [label]="{ text: 'Activity' }" [colSpan]="2">
+              <dx-drop-down-box
+                [(value)]="selectedRowKeysActivityDetail"
+                displayExpr="activityName"
+                placeholder="Select..."
+                [showClearButton]="true"
+                [dataSource]="listActivity"
+                valueExpr="id"
+              >
+                <div *dxTemplate="let data of 'content'">
+                  <dx-data-grid
+                    [dataSource]="listActivity"
+                    keyExpr="id"
+                    [columns]="['activityName']"
+                    [selection]="{ mode: 'multiple' }"
+                    [hoverStateEnabled]="true"
+                    [filterRow]="{ visible: true, showOperationChooser: false }"
+                    [scrolling]="{ mode: 'virtual' }"
+                    [height]="345"
+                    (onSelectionChanged)="onSelectActivityDetail($event)"
+                    [(selectedRowKeys)]="selectedRowKeysActivityDetail"
+                  >
+                  </dx-data-grid>
+                </div>
+              </dx-drop-down-box>
+            </dxi-item>
+            <dxi-item
+              itemType="button"
+              [cssClass]="'line-height'"
+              [buttonOptions]="FilterDetailReport"
+              [visible]="isManager || isQa"
+            >
+            </dxi-item>
+            <dxi-item
+              dataField="startDate"
+              [label]="{ text: 'Start Date' }"
+              editorType="dxDateBox"
+              [colSpan]="dateCol"
+              [editorOptions]="{
+                width: '100%',
+                type: 'date',
+                displayFormat: 'dd/MM/yyyy',
+                onValueChanged: onValueChangedStartDate,
+                useMaskBehavior: 'true',
+                placeholder: 'dd/mm/yyyy'
+              }"
+            >
+            </dxi-item>
+            <dxi-item
+              dataField="endDate"
+              [label]="{ text: 'End Date' }"
+              editorType="dxDateBox"
+              [colSpan]="dateCol"
+              [editorOptions]="{
+                width: '100%',
+                type: 'date',
+                displayFormat: 'dd/MM/yyyy',
+                onValueChanged: onValueChangedEndDate,
+                useMaskBehavior: 'true',
+                placeholder: 'dd/mm/yyyy'
+              }"
+            >
+            </dxi-item>
+            <dxi-item
+              itemType="button"
+              [cssClass]="'line-height'"
+              [buttonOptions]="FilterDetailReport"
+              [visible]="isUser"
+            >
+            </dxi-item>
+          </dx-form>
+        </div>
+        <!-- End Filter form -->
+
+        <!-- Report Detail datagrid -->
+        <div class="dx-widget dx-visibility-change-handler">
+          <div class="dx-datagrid dx-gridbase-container dx-datagrid-borders">
+            <div class="dx-datagrid-content">
+              <table
+                class="dx-datagrid-table dx-datagrid-table-fixed"
+                role="presentation"
+                style="
+                  table-layout: fixed;
+                  background-color: #fff;
+                  width: 100%;
+                  border: 1px solid #e0e0e0;
+                "
+              >
+                <tr class="dx-row dx-data-row dx-row-lines tableHeaderRow">
+                  <td
+                    class="dx-datagrid-action columnTitle"
+                    style="width: 110px"
+                  >
+                    Backlog Id
+                  </td>
+                  <td
+                    class="dx-datagrid-action columnTitle"
+                    style="width: 100px"
+                  >
+                    Task Id
+                  </td>
+                  <td class="dx-datagrid-action columnTitle">Name Task</td>
+                  <td class="dx-datagrid-action columnTitle">Activity</td>
+                  <td class="dx-datagrid-action columnTitle">User</td>
+                  <td
+                    class="dx-datagrid-action columnTitle"
+                    style="width: 150px"
+                  >
+                    Time
+                  </td>
+                  <td
+                    class="dx-datagrid-action columnTitle"
+                    style="width: 70px; padding: 0 20px 0 0"
+                  >
+                    Duration
+                  </td>
+                  <td
+                    class="dx-datagrid-action columnTitle"
+                    style="text-align: center; width: 200px"
+                    *ngIf="isAdminRole"
+                  >
+                    <!-- Button add for admin -->
+                    <div style="width: 100%">
+                      <div>
+                        <dx-button
+                          *ngIf="isAdminRole"
+                          stylingMode="contained"
+                          icon="add"
+                          text="Add new"
+                          type="success"
+                          (onClick)="addNewTimeSheetRecordByAdmin($event)"
+                        >
+                        </dx-button>
+                      </div>
+                    </div>
+                    <!-- End Button add for admin -->
+                  </td>
+                </tr>
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let item of pagingModel.items
+                        | paginate
+                          : {
+                              id: 'paginationId',
+                              itemsPerPage: pageSize,
+                              currentPage: page,
+                              totalItems: count
+                            };
+                      let i = index
+                    "
+                    [class.active]="i == currentIndex"
+                    class="dx-row dx-data-row dx-row-lines"
+                  >
+                    <td class="columnContent">
+                      {{ item.backlogId }}
+                    </td>
+                    <td class="columnContent">{{ item.taskId }}</td>
+                    <td class="columnContent">
+                      {{ item.timeSheetRecordName }}
+                    </td>
+                    <td class="columnContent">{{ item.nameTask }}</td>
+                    <td class="columnContent">{{ item.fullName }}</td>
+                    <td class="columnContent">
+                      {{ item.startHour }} - {{ item.endHour }}
+                      <br />
+                      {{ item.dateRecord }}
+                    </td>
+                    <td class="columnContent" style="padding-left: 0">
+                      {{ getString(item.duration.hours) }}:{{
+                        getString(item.duration.minutes)
+                      }}
+                    </td>
+                    <td
+                      class="columnContent"
+                      *ngIf="isAdminRole"
+                      style="width: 200px"
+                    >
+                      <dx-button
+                        stylingMode="contained"
+                        text="Edit"
+                        type="default"
+                        (onClick)="updateTimeSheetRecordByAdmin($event, item)"
+                      >
+                      </dx-button>
+                      <dx-button
+                        stylingMode="contained"
+                        text="Delete"
+                        type="danger"
+                        style="margin-left: 5px"
+                        (onClick)="deleteTimeSheetByAdmin($event, item)"
+                      >
+                      </dx-button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- End Report Detail datagrid -->
+
+        <!-- Pagination -->
+        <div class="time-report-paginator">
+          <pagination-controls
+            id="paginationId"
+            (pageChange)="handlePageChange($event)"
+            responsive="true"
+            previousLabel="Previous"
+            nextLabel="Next"
+          ></pagination-controls>
+          Items per Page:
+          <select
+            (change)="handlePageSizeChange($event)"
+            style="margin-left: 5px"
+          >
+            <option *ngFor="let size of pageSizes" [ngValue]="size">
+              {{ size }}
+            </option>
+          </select>
+        </div>
+        <!-- End pagination -->
+      </div>
+    </dxi-item>
+    <!-- End Detail report -->
+  </dx-tab-panel>
+</div>
+
+<dx-popup
+  width="auto"
+  height="auto"
+  [showTitle]="true"
+  title="DELETE CONFIRM"
+  [closeOnOutsideClick]="false"
+  [showCloseButton]="false"
+  [(visible)]="popupDeleteTimeSheetRecord"
+>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [options]="confirmDeletePopupTimeSheetRecordButtonOptions"
+  >
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="after"
+    [options]="closeDeletePopupTimeSheetRecordButtonOptions"
+  >
+  </dxi-toolbar-item>
+  <div *dxTemplate="let data of 'content'">
+    Are you sure you want to delete this record?
+  </div>
+</dx-popup>
+
+<app-time-sheet-report-form
+  [model]="currentTimeSheetRecord"
+  (onRefreshGrid)="refreshDataGrid()"
+  [listUser]="listUser"
+>
+</app-time-sheet-report-form>

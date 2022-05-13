@@ -1,0 +1,26 @@
+.entries-header {
+  padding-left: 15px;
+  padding-right: 15px;
+  display: flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #c6d2d9;
+}
+
+.entries-date {
+  color: #999;
+}
+
+.entries-total-time {
+  display: flex;
+  color: #999;
+  align-items: center !important;
+}
+
+.entries-total {
+  color: #333;
+  line-height: 1 !important;
+  font-weight: 1000;
+  padding-left: 10px;
+}

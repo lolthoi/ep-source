@@ -1,0 +1,14 @@
+<div class="entries-container">
+  <time-sheet-entry-group-header
+    [(date)]="date"
+    [(entries)]="entries"
+  ></time-sheet-entry-group-header>
+  <div
+    class="entries-list"
+    *ngFor="let entry of entries"
+    [class.active]="entries - list"
+  >
+    <time-sheet-entry [entry]="entry" (onRefreshGrid)="refreshGrid()">
+    </time-sheet-entry>
+  </div>
+</div>

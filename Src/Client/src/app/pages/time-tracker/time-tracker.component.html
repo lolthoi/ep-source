@@ -1,0 +1,50 @@
+<div class="page-wrapper">
+  <div class="time-tracker-container">
+    <!-- Time tracker recorder-->
+    <div class="time-tracker-recorder">
+      <time-tracker-recorder
+        (onRefreshGrid)="getRecords()"
+      ></time-tracker-recorder>
+    </div>
+    <!--Time-Tracker-Entries-->
+    <div class="time-tracker-entries-wrapper">
+      <div
+        class="list-group-item"
+        *ngFor="
+          let key of keys
+            | paginate
+              : {
+                  id: 'paginationId',
+                  itemsPerPage: pageSize,
+                  currentPage: page,
+                  totalItems: count
+                };
+          let i = index
+        "
+        [class.active]="i == currentIndex"
+      >
+        <time-sheet-entry-group
+          [date]="key"
+          [(entries)]="tsGroupEntries[key]"
+          (onRefreshGrid)="getRecords()"
+        ></time-sheet-entry-group>
+      </div>
+    </div>
+    <!-- Pagination -->
+    <div class="time-tracker-paginator">
+      <pagination-controls
+        id="paginationId"
+        (pageChange)="handlePageChange($event)"
+        responsive="true"
+        previousLabel="Previous"
+        nextLabel="Next"
+      ></pagination-controls>
+      Items per Page:
+      <select (change)="handlePageSizeChange($event)" style="margin-left: 5px">
+        <option *ngFor="let size of pageSizes" [ngValue]="size">
+          {{ size }}
+        </option>
+      </select>
+    </div>
+  </div>
+</div>

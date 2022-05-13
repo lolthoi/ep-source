@@ -1,0 +1,125 @@
+<form class="login-form" (submit)="onSubmit($event)">
+  <dx-form [formData]="formData" [disabled]="loading">
+    <dxi-item
+      dataField="email"
+      editorType="dxTextBox"
+      [editorOptions]="{
+        stylingMode: 'filled',
+        placeholder: 'Email',
+        mode: 'text',
+        onInitialized: setFocus
+      }"
+      [cssClass]="'padding-top-10'"
+    >
+      <dxi-validation-rule
+        type="required"
+        message="Email is required"
+      ></dxi-validation-rule>
+      <!-- <dxi-validation-rule type="email" message="Email is invalid"></dxi-validation-rule> -->
+      <dxo-label [visible]="false"></dxo-label>
+    </dxi-item>
+    <!-- 
+    <dxi-item dataField="password" editorType="dxTextBox"
+      [editorOptions]="{ stylingMode: 'filled', placeholder: 'Password', mode: 'password' }">
+      <dxi-validation-rule type="required" message="Password is required"></dxi-validation-rule>
+      <dxo-label [visible]="false"></dxo-label>
+    </dxi-item> -->
+
+    <dxi-item [cssClass]="'padding-top-10'">
+      <div *dxTemplate>
+        <dx-text-box
+          [(value)]="formData.password"
+          placeholder="Password"
+          stylingMode="filled"
+          [(mode)]="Options.passwordTextBoxOptions.passwordMode"
+          (onInput)="onInputPasswordTextBox($event)"
+        >
+          <dxi-button
+            name="today"
+            location="after"
+            [options]="Options.passwordTextBoxOptions.passwordButton"
+          ></dxi-button>
+        </dx-text-box>
+      </div>
+      <dxi-validation-rule
+        type="required"
+        message="Password is required"
+      ></dxi-validation-rule>
+    </dxi-item>
+
+    <!-- <dxi-item dataField="rememberMe" editorType="dxCheckBox"
+      [editorOptions]="{ text: 'Remember me', elementAttr: { class: 'form-text' } }">
+      <dxo-label [visible]="false"></dxo-label>
+    </dxi-item> -->
+
+    <dxi-item [cssClass]="'padding-top-10'">
+      <div class="login-link">
+        <a routerLink="/forgot-password"> Forgot Password? </a>
+      </div>
+    </dxi-item>
+
+    <dxi-item itemType="button" [cssClass]="'padding-top-10'">
+      <dxo-button-options
+        width="100%"
+        type="default"
+        [useSubmitBehavior]="true"
+        [template]="'signInTemplate'"
+      >
+      </dxo-button-options>
+    </dxi-item>
+
+    <dxi-item [cssClass]="'padding-top-10'">
+      <div class="login-link cl-or-divider">
+        <a style="text-decoration: none; padding: 0 5px"> Or </a>
+      </div>
+    </dxi-item>
+
+    <dxi-item itemType="button" [cssClass]="'padding-top-10'">
+      <dxo-button-options
+        width="100%"
+        type="default"
+        [template]="'googleSignInTemplate'"
+      >
+      </dxo-button-options>
+    </dxi-item>
+
+    <!-- <dxi-item>
+      <div class="link">
+        <a routerLink="/reset-password">Forgot password?</a>
+      </div>
+    </dxi-item> -->
+
+    <!-- <dxi-item itemType="button">
+      <dxo-button-options text="Create an account" width="100%" [onClick]="onCreateAccountClick"></dxo-button-options>
+    </dxi-item> -->
+
+    <ng-container *dxTemplate="let item of 'signInTemplate'">
+      <span class="dx-button-text">
+        <ng-container *ngIf="loading; else notLoading">
+          <dx-load-indicator
+            width="24px"
+            height="24px"
+            [visible]="true"
+          ></dx-load-indicator>
+        </ng-container>
+        <ng-template #notLoading>Sign In</ng-template>
+      </span>
+    </ng-container>
+
+    <ng-container *dxTemplate="let item of 'googleSignInTemplate'">
+      <span
+        class="dx-button-text google-sign-in-text"
+        (click)="signInWithGoogle()"
+      >
+        <ng-container *ngIf="loadingWithGoogle; else notloadingWithGoogle">
+          <dx-load-indicator
+            width="24px"
+            height="24px"
+            [visible]="true"
+          ></dx-load-indicator>
+        </ng-container>
+        <ng-template #notloadingWithGoogle>Continue With Kloon</ng-template>
+      </span>
+    </ng-container>
+  </dx-form>
+</form>

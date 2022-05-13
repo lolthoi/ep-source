@@ -1,0 +1,116 @@
+<dx-form id="form" [formData]="record" colCount="12">
+  <dxi-item [colSpan]="9">
+    <div *dxTemplate>
+      <dx-text-box
+        [(value)]="record.name"
+        placeholder="What have you worked on?"
+      >
+      </dx-text-box>
+    </div>
+    <dxi-validation-rule type="required" message="This field is required">
+    </dxi-validation-rule>
+  </dxi-item>
+
+  <dxi-item [colSpan]="3">
+    <div *dxTemplate>
+      <dx-select-box
+        [dataSource]="taskIdDataSource"
+        [grouped]="true"
+        displayExpr="activityName"
+        valueExpr="id"
+        [value]="record.tsActivityId"
+        placeholder="Find task @Project"
+        [showClearButton]="true"
+        (onValueChanged)="onActivityIdValueChanged($event)"
+      >
+      </dx-select-box>
+    </div>
+    <dxi-validation-rule
+      type="required"
+      message="The task is required"
+    ></dxi-validation-rule>
+  </dxi-item>
+
+  <dxi-item [colSpan]="2">
+    <div *dxTemplate>
+      <dx-text-box [(value)]="record.backlogId" placeholder="#BacklogID">
+      </dx-text-box>
+    </div>
+  </dxi-item>
+
+  <dxi-item [colSpan]="2">
+    <div *dxTemplate>
+      <dx-text-box
+        [(value)]="record.taskId"
+        placeholder="#TaskID"
+        showDropDownButton="false"
+      >
+      </dx-text-box>
+    </div>
+  </dxi-item>
+
+  <dxi-item [colSpan]="2">
+    <div *dxTemplate>
+      <dx-date-box
+        [(value)]="record.startTime"
+        type="time"
+        displayFormat="HH:mm"
+        (onValueChanged)="onValueChangedStartTime($event)"
+        (onInitialized)="onInitStartTimeComp($event)"
+        [invalidDateMessage]="invalidTimeMessage"
+      >
+        <dx-validator>
+          <dxi-validation-rule type="required" message="Start time is required">
+          </dxi-validation-rule>
+        </dx-validator>
+      </dx-date-box>
+    </div>
+  </dxi-item>
+
+  <dxi-item [colSpan]="2">
+    <div *dxTemplate>
+      <dx-date-box
+        [(value)]="record.endTime"
+        displayFormat="HH:mm"
+        type="time"
+        (onValueChanged)="onValueChangedEndTime($event)"
+        (onInitialized)="onInitEndTimeComp($event)"
+        [invalidDateMessage]="invalidTimeMessage"
+      >
+        <dx-validator>
+          <dxi-validation-rule type="required" message="End time is required">
+          </dxi-validation-rule>
+        </dx-validator>
+      </dx-date-box>
+    </div>
+  </dxi-item>
+
+  <dxi-item [colSpan]="2">
+    <div *dxTemplate>
+      <dx-date-box
+        [(value)]="chosenDate"
+        type="date"
+        displayFormat="dd'/'MM'/'yyyy"
+        (onValueChanged)="onValueChangedDateRecord($event)"
+        [min]="minRecordDate"
+        [invalidDateMessage]="invalidDateMessage"
+      >
+      </dx-date-box>
+    </div>
+  </dxi-item>
+
+  <dxi-item [colSpan]="2">
+    <div *dxTemplate>
+      <div class="recorder-action">
+        <div class="recorder-total">{{ totalTime }}</div>
+        <dx-button
+          stylingMode="contained"
+          text="Add"
+          type="default"
+          (onClick)="onSaveTimeSheetRecord($event)"
+        >
+        </dx-button>
+      </div>
+    </div>
+  </dxi-item>
+</dx-form>

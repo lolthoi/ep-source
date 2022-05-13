@@ -1,0 +1,138 @@
+Feature: Check Evaluation Management screen meta
+
+@StepDef
+@Context
+Scenario: I login to App with acc as admin
+	Given I start a new browser
+	And username can be located by css selector ".dx-col-0.dx-field-item.dx-field-item-required.dx-first-col.dx-first-row.dx-flex-layout.dx-last-col > .dx-field-item-content.dx-field-item-content-location-bottom > .dx-editor-filled.dx-show-invalid-badge.dx-textbox.dx-texteditor.dx-texteditor-empty.dx-validator.dx-visibility-change-handler.dx-widget > .dx-texteditor-container > .dx-texteditor-input-container > input[role='textbox']"
+	And password can be located by css selector "[type='password']"
+	And buttonLogin can be located by css selector ".dx-button-text.dx-template-wrapper"
+    When I navigate to "http://rethink.kloon.vn:7200/login-form"
+	And  I type "admin@kloon.vn" in username
+	And  I type "123456" in password
+	And  I click buttonLogin
+	
+@StepDef
+@Action
+Scenario: I check order in grid view
+	Given iconEvaluation can be located by css selector ".dx-icon.dx-icon-background" 
+	And textEvaluationLeader can be located by css selector "li:nth-of-type(4) > ul[role='group'] > li:nth-of-type(3)  .dx-item-content.dx-treeview-item-content"
+	And columnName can be located by id "dx-col-10"
+	And columnProjectName can be located by id "dx-col-11"
+	And columnPosition can be located by id "dx-col-12"
+	And columnFirstQuarter can be located by id "dx-col-13"
+	And columnSecondQuarter can be located by id "dx-col-14"
+	When I click iconEvaluation
+	And I click textEvaluationLeader
+	And I click columnName
+	And I wait 1 second
+	And I click columnName
+	And I wait 1 second
+	And I click columnProjectName
+	And I wait 1 second
+	And I click columnProjectName
+	And I wait 1 second
+	And I click columnPosition
+	And I wait 1 second
+	And I click columnPosition
+	And I wait 1 second
+	And I click columnFirstQuarter
+	And I wait 1 second
+	And I click columnFirstQuarter
+	And I wait 1 second
+	And I click columnSecondQuarter
+	And I wait 1 second
+	And I click columnSecondQuarter
+	And I wait 1 second
+	
+@StepDef
+@Action
+Scenario Outline: I check search in grid view
+	Given textboxSearch can be located by css selector "input[role='textbox']"
+	And buttonClose can be located by css selector ".dx-datagrid-search-panel.dx-editor-underlined.dx-searchbox.dx-show-clear-button.dx-show-invalid-badge.dx-textbox.dx-texteditor.dx-widget .dx-icon.dx-icon-clear"
+	When I type "<dataSearch>" in textboxSearch
+	And  I wait 1 second
+	And  I click buttonClose
+	
+	Examples: case
+	|dataSearch|
+	|User|
+	|agenda|
+	|Tester|
+
+@StepDef
+@Action
+Scenario: I check dropdown Project
+	Given fieldProject can be located by css selector "input[role='combobox']"
+	And selectionFirst can be located by css selector "div:nth-of-type(1) > .dx-item-content.dx-list-item-content"
+	And buttonClear can be located by css selector ".dx-dropdowneditor-input-wrapper .dx-icon-clear"
+	When I click fieldProject
+	And  I click selectionFirst
+	And  I wait 1 second
+	And  I click buttonClear
+	
+@StepDef
+@Action
+Scenario: I check point evaluation
+	Given cellFirstEvaluation can be located by css selector "tr:nth-of-type(1) > td:nth-of-type(4) a[title='Need to evaluate.']"
+	And buttonCancel can be located by css selector "[aria-label='Cancel'] .dx-button-content"
+	When I click cellFirstEvaluation
+	And  I wait 1 second
+	And  I click buttonCancel
+	
+@StepDef
+@Action
+Scenario: I login to App with acc as project leader
+	Given iconUser can be located by css selector ".user-info"
+	And buttonLogout can be located by css selector "li:nth-of-type(2) > div[role='menuitem'] > .dx-item-content.dx-menu-item-content"
+	And fieldEmail can be located by css selector "[type='text']"
+	When I click iconUser
+	And  I click buttonLogout
+	And  I type "pham.bao.yen@kloon.vn" in fieldEmail
+	And  I type "123456" in password
+	And  I click buttonLogin
+
+@StepDef
+@Action
+Scenario: I check dropdown Project of leader
+	Given textEvaluationLeader(1) can be located by css selector "li:nth-of-type(4) > ul[role='group'] > li:nth-of-type(2)  .dx-item-content.dx-treeview-item-content"
+	When I click iconEvaluation
+	And  I click textEvaluationLeader(1)
+	And  I click fieldProject
+	And  I click selectionFirst
+	And  I wait 1 second
+	And  I click buttonClear
+	
+@StepDef
+@Action
+Scenario Outline: I check search in grid view of leader
+	Given I click textboxSearch
+	When I type "<LeaderSearch>" in textboxSearch
+	And  I wait 1 second
+	And  I click buttonClose
+	
+	Examples: case
+	|LeaderSearch|
+	|User|
+	|agenda|
+	|Tester|
+	
+
+@StepDef
+@Action
+Scenario: I check point evaluation of leader
+	Given selectionThird can be located by css selector "div:nth-of-type(3) > .dx-item-content.dx-list-item-content"
+	And CellEvaluation can be located by css selector "tr:nth-of-type(1) > td:nth-of-type(4) a[title='Need to evaluate.']"
+	And buttonSave can be located by css selector "[aria-label='Save'] .dx-button-content"
+	And buttonCancelLeader can be located by xpath "/html/body/div/div/div[3]//div[@class='dx-toolbar-after']/div/div[@class='dx-item-content dx-toolbar-item-content']/div[@role='button']/div[@class='dx-button-content']"
+	When I click fieldProject
+	And  I click selectionThird
+	And  I click CellEvaluation
+	And  I wait 1 second
+	And  I click buttonSave
+	And  I click buttonCancelLeader
+	
+	
+
+	
+

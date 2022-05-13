@@ -1,0 +1,100 @@
+Feature:hue meta
+
+@StepDef
+@Context
+Scenario: I am on the login employee pages
+     Given I start a new browser
+	 And username can be located by css selector ".dx-col-0.dx-field-item.dx-field-item-required.dx-first-col.dx-first-row.dx-flex-layout.dx-last-col > .dx-field-item-content.dx-field-item-content-location-bottom > .dx-editor-filled.dx-show-invalid-badge.dx-textbox.dx-texteditor.dx-texteditor-empty.dx-validator.dx-visibility-change-handler.dx-widget > .dx-texteditor-container > .dx-texteditor-input-container > input[role='textbox']"
+	 And password can be located by css selector "[type='password']"
+	 And loginBtn can be located by css selector ".dx-button-text.dx-template-wrapper"
+     When I navigate to "http://rethink.kloon.vn:7200/login-form"
+	 And I type "admin@kloon.vn" in username
+	 And I type "123456" in password
+	 And I click loginBtn
+@StepDef
+@Action
+Scenario:I have Valid edituser
+	Given logo can be located by css selector ".dx-item.dx-toolbar-button.dx-toolbar-item.menu-button"
+	And useritem can be located by css selector ".dx-icon.dx-icon-user"
+	And detailbtn can be located by css selector "tr:nth-of-type(2) > td:nth-of-type(6)  dx-button[role='button'] > .dx-button-content"
+	And editbtn can be located by css selector "div:nth-of-type(3) > .dx-item-content.dx-toolbar-item-content > div[role='button']  .dx-button-text"
+	And email can be located by css "div:nth-of-type(2) > .dx-box.dx-box-flex.dx-box-item-content.dx-collection.dx-item-content.dx-visibility-change-handler.dx-widget > div:nth-of-type(1) > .dx-box-item-content.dx-item-content.dx-root-simple-item input[role='textbox']"
+	And sex can be located by css selector "div:nth-of-type(2) > .dx-box.dx-box-flex.dx-box-item-content.dx-collection.dx-item-content.dx-visibility-change-handler.dx-widget > div:nth-of-type(2) > .dx-box-item-content.dx-item-content.dx-root-simple-item input[role='combobox']"
+	And sex1 can be located by xpath "//body/div[2]/div/div[@class='dx-popup-content']/div[@role='listbox']//div[@class='dx-scrollview-content']/div[2]/div[@class='dx-item-content dx-list-item-content']"
+	And first can be located by css selector "div:nth-of-type(1) > .dx-box.dx-box-flex.dx-box-item-content.dx-collection.dx-item-content.dx-visibility-change-handler.dx-widget > div:nth-of-type(1) input[role='textbox']"
+	And last can be located by css selector ".dx-box.dx-box-flex.dx-box-item-content.dx-collection.dx-item-content.dx-visibility-change-handler.dx-widget > div:nth-of-type(2) input[role='textbox']"
+	And role can be located by css selector "div:nth-of-type(1) > .dx-box-item-content.dx-item-content.dx-root-simple-item input[role='combobox']"
+	And role1 can be located by css selector "[data-bind='dxControlsDescendantBindings\: true']:nth-child(7) [role='option']:nth-of-type(2) .dx-list-item-content"
+	And position can be located by css selector "div:nth-of-type(3) > .dx-box.dx-box-flex.dx-box-item-content.dx-collection.dx-item-content.dx-visibility-change-handler.dx-widget > div:nth-of-type(2) > .dx-box-item-content.dx-item-content.dx-root-simple-item input[role='combobox']"
+	And position1 can be located by css selector "[data-bind='dxControlsDescendantBindings\: true']:nth-child(7) [role='option']:nth-of-type(1) .dx-list-item-content"
+	And phone can be located by css selector "div:nth-of-type(4) > .dx-box.dx-box-flex.dx-box-item-content.dx-collection.dx-item-content.dx-visibility-change-handler.dx-widget > div:nth-of-type(1) input[role='textbox']"
+	And date can be located by css selector "div:nth-of-type(4) > .dx-box.dx-box-flex.dx-box-item-content.dx-collection.dx-item-content.dx-visibility-change-handler.dx-widget > div:nth-of-type(2) > .dx-box-item-content.dx-item-content.dx-root-simple-item div[role='button']  .dx-dropdowneditor-icon"
+	And date1 can be located by css selector "div:nth-of-type(1) > table[role='grid'] > tbody > tr:nth-of-type(4) > td:nth-of-type(6) > span"
+	And save can be located by css selector "[data-bind] .dx-toolbar-button:nth-of-type(2) .dx-button-text"
+	And detail can be located by css selector "tr:nth-of-type(1) > td:nth-of-type(6)  dx-button[role='button']  .dx-button-text"
+	And delete can be located by css selector "div:nth-of-type(4) > .dx-item-content.dx-toolbar-item-content > div[role='button'] > .dx-button-content"
+	And okbtn can be located by xpath "/html/body/div[2]/div/div[3]//div[@class='dx-toolbar-before']/div/div[@class='dx-item-content dx-toolbar-item-content']/div[@role='button']//span[@class='dx-button-text']"
+	When I click logo
+	And I click useritem
+	And I click detail
+	And I click editbtn
+	And I click role
+	And I click role1
+	And I click first
+	And I clear first
+	And I click last
+	And I clear last
+	And I click email
+	And I clear email
+	And I click phone
+	And I clear phone
+	And I type "012" in first
+	And I type "456" in last
+	And I type "huycan2@kloon.vn" in email
+	And I click sex
+	And I click sex1
+	And I click position
+	And I click position1
+	And I type "1234567898" in phone
+	And I click date
+	And I click date1
+	And I click save
+	And I click detail
+	And I click delete
+	And I click okbtn
+	
+@StepDef
+@Assertion
+Scenario Outline:I have Invalid edit
+	Given cancelbtn can be located by css selector "[data-bind] .dx-toolbar-after .dx-button-text"
+	When I click detail
+	And I click editbtn
+	And I click role
+	And I click role1
+	And I click first
+	And I clear first
+	And I click last
+	And I clear last
+	And I click email
+	And I clear email
+	And I click phone
+	And I clear phone
+	And I click sex
+	And I click sex1
+	And I type "<first>" in first
+	And I type "<last>" in last
+	And I type "<email>" in email
+	And I click role
+	And I click role1
+	And I click position
+	And I click position1
+	And I type "<phone>" in phone
+	And I click date
+	And I click date1
+	And I click save
+	And I click cancelbtn
+	Examples: case
+	|first|last|email|phone|
+	|test22|123|123@klggoon.vn|1234567890|
+	|test|12223|12aa4e3@gmail|1234567890|
+	

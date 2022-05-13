@@ -1,0 +1,47 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300,400,500,700);
+
+.table {
+  text-align: center;
+}
+
+.time-report-paginator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: inherit;
+}
+
+::ng-deep .dx-form .line-height {
+  line-height: 76px;
+}
+
+::ng-deep .tableHeaderRow {
+  height: 57px;
+}
+
+::ng-deep .columnTitle {
+  color: rgba(0, 0, 0, 0.54);
+  line-height: 16px !important;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  font-family: Roboto, RobotoFallback, "Noto Kufi Arabic", Helvetica, Arial,
+    sans-serif !important;
+  text-align: left;
+}
+
+::ng-deep .columnContent {
+  background-color: #fff;
+  color: rgba(0, 0, 0, 0.87);
+  font-weight: 400 !important;
+  font-size: 14px !important;
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+  font-family: Roboto, RobotoFallback, "Noto Kufi Arabic", Helvetica, Arial,
+    sans-serif !important;
+  line-height: 1.2857 !important;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

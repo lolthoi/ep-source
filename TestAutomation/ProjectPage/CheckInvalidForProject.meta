@@ -1,0 +1,129 @@
+Feature: Check Invalid for Project meta
+
+@StepDef
+@Context
+Scenario: I login to App 
+	Given I start a new browser
+	And username can be located by css selector ".dx-col-0.dx-field-item.dx-field-item-required.dx-first-col.dx-first-row.dx-flex-layout.dx-last-col > .dx-field-item-content.dx-field-item-content-location-bottom > .dx-editor-filled.dx-show-invalid-badge.dx-textbox.dx-texteditor.dx-texteditor-empty.dx-validator.dx-visibility-change-handler.dx-widget > .dx-texteditor-container > .dx-texteditor-input-container > input[role='textbox']"
+	And password can be located by css selector "[type='password']"
+	And  buttonLogin can be located by css selector ".dx-button-text.dx-template-wrapper"
+    When I navigate to "http://rethink.kloon.vn:7200/login-form"
+	And  I type "admin@kloon.vn" in username
+	And  I type "123456" in password
+	And  I click buttonLogin
+	
+@StepDef
+@Action
+Scenario: I create a new project
+	Given iconProject can be located by css selector "li:nth-of-type(3) .dx-icon"
+	And textProject can be located by css selector "li:nth-of-type(3) span"
+	And buttonCreate can be located by css selector "div[role='toolbar'] div[role='button'] > .dx-button-content"
+	And textboxName can be located by css selector ".dx-box-item-content.dx-item-content.dx-root-simple-item input[role='textbox']"
+	And textboxDescription can be located by css selector "textarea[role='textbox']"
+	And listStatus can be located by xpath "/html//dx-form[@id='form']/div/div/div/div[3]/div//input[@role='combobox']"
+	And statusOpen can be located by css selector "div:nth-of-type(1) > .dx-item-content.dx-list-item-content"
+	And statusPending can be located by css selector "div:nth-of-type(2) > .dx-item-content.dx-list-item-content"
+	And statusClosed can be located by css selector "div:nth-of-type(3) > .dx-item-content.dx-list-item-content"
+	And startDate can be located by css selector ".dx-box .dx-box-item:nth-of-type(4) [aria-haspopup]"
+	And endDate can be located by css selector "[class='dx-first-col dx-last-col dx-last-row dx-field-item dx-col-0 dx-field-item-optional dx-flex-layout dx-label-v-align'] [aria-haspopup]"
+	And buttonAdd can be located by css selector ".dx-icon.dx-icon-save"
+	And buttonCancel can be located by css selector "[aria-label='Cancel'] .dx-button-content"
+	When I click iconProject
+	And I click textProject
+	And I click buttonCreate
+	And I type "0000Project" in textboxName
+	And I click textboxDescription
+	And I type "The project is using for checking valid/invalid data" in textboxDescription
+	And I click listStatus 
+	And I click statusOpen
+	And I type "1/6/2021" in startDate
+	And I type "7/6/2021" in endDate
+	And I click buttonAdd
+	And I click buttonCancel
+	
+@StepDef
+@Action
+Scenario Outline: I check data in the field name
+	Given buttonCreate2 can be located by css selector "div[role='toolbar'] div[role='button'] > .dx-button-content"
+	When I click buttonCreate2
+	And  I type "<NameColumn>" in textboxName
+	And  I click listStatus 
+	And  I click statusOpen
+	And  I type "1/6/2021" in startDate
+	And  I type "7/6/2021" in endDate
+	And  I click buttonAdd
+	And  I wait 2 second
+	And  I click buttonCancel
+	
+	Examples: case
+	|NameColumn|
+	|0000Project|
+	||
+	|Check to click on the sub-item Evaluation  Personal|
+	
+@StepDef
+@Action
+Scenario: I check data in the field Status
+	Given I click buttonCreate
+	When I type "Check Status" in textboxName
+	And  I type "1/6/2021" in startDate
+	And  I type "7/6/2021" in endDate
+	And  I click buttonAdd
+	And  I wait 2 second
+	And  I click buttonCancel
+
+@StepDef
+@Action
+Scenario: I check data in the field StartDate
+	Given I click buttonCreate
+	When I type "Check StartDate" in textboxName
+	And  I click listStatus 
+	And  I click statusOpen
+	And  I type "7/6/2021" in endDate
+	And  I click buttonAdd
+	And  I wait 2 second
+	And  I click buttonCancel
+
+@StepDef
+@Action
+Scenario Outline: I edit data in the field Name
+	Given buttonDetail(1) can be located by css selector "tr:nth-of-type(1) > td:nth-of-type(4)  dx-button[role='button'] > .dx-button-content"
+	And buttonEdit can be located by css selector "div:nth-of-type(3) > .dx-item-content.dx-toolbar-item-content > div[role='button'] > .dx-button-content"
+	And buttonUpdate can be located by css selector "[aria-label='Update'] .dx-button-content" 
+	When I click buttonDetail(1)
+	And  I click buttonEdit
+	And  I click textboxName
+	And  I clear textboxName
+	And  I type "<EditNameColumn>" in textboxName
+	And  I click buttonUpdate
+	And  I wait 2 second
+	And  I click buttonCancel
+	
+	Examples: case
+	|EditNameColumn|
+	|0000Project|
+	||
+	|Check to click on the sub-item Evaluation  Personal|
+
+@StepDef
+@Action
+Scenario: I edit data in the field StartDate
+	Given I click buttonDetail(1)
+	When I click buttonEdit
+	And  I click startDate
+	And  I clear startDate
+	And  I click buttonUpdate
+	And  I wait 2 second
+	And  I click buttonCancel
+@StepDef
+@Assertion
+Scenario: I delete the new project
+	Given buttonDelete can be located by css selector "div:nth-of-type(4) > .dx-item-content.dx-toolbar-item-content > div[role='button'] > .dx-button-content"
+	And buttonYes can be located by css selector ".dx-toolbar-center > div:nth-of-type(1) > .dx-item-content.dx-toolbar-item-content > div[role='button'] > .dx-button-content"
+	When I click buttonDetail(1)
+	And  I click buttonDelete
+	And  I click buttonYes
+	
+	
+	
+

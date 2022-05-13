@@ -1,0 +1,20 @@
+.entries-container {
+  box-sizing: border-box;
+  border: 1px solid #c6d2d9;
+  border-bottom: 4px solid #c6d2d9;
+  background-color: white;
+}
+
+.entries-list {
+  display: grid;
+  grid-template-columns: repeat(1, mimax(200px, 1fr));
+  grid-template-rows: repeat(auto-fill, mimax(200px, 1fr));
+  grid-auto-rows: 70px;
+}
+
+.entries-list > * {
+  padding-left: 10px;
+  padding-right: 10px;
+  border-bottom: 1px solid #c6d2d9;
+  border-bottom: 1px solid #c6d2d9;
+}
